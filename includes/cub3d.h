@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/09 17:42:10 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/09 18:33:56 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,20 @@
 # define WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
 # define FILE_NAME_ERR "Error 🤯\nFile passed as argument doesn't meet format \
 format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
+# define FILE_OPEN_ERR "Error 🤯\nCouldn't open file.\n"
 # define DIR_ARG_ERR "Error 🤯\nDirectory passed as argument.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
+
+typedef struct s_input
+{
+	char	**map;
+	int		height;
+	int		width;
+}	t_input;
+
+typedef struct s_game
+{
+	t_input	*input;
+}	t_game;
 
 /* PROTOTYPES */
 
