@@ -28,6 +28,7 @@ cub3d
 *.so
 *.so.*
 *.dylib
+.vscode
 
 # Executables
 *.exe
