@@ -11,17 +11,21 @@ NAME		:=	cub3d
 CC			:=	cc
 CFLAGS		:=	-g3 -Wall -Wextra -Werror
 DEP_FLAGS	:=	-MMD -MP
-LDFLAGS		:=	-lreadline
 RM			:=	rm -rf
+MLX_FLAGS	:=	-lX11 -lXext
 
 # **************************************************************************** #
 #                                  DIRECTORIES                                 #
 # **************************************************************************** #
 
-SRCS_DIR 	:=	srcs
+SRCS_DIR 	:=	src
+PARSER_DIR	:=	parser
+ERR_DIR		:=	error
 INCLD_DIR 	:=	includes
 OBJS_DIR 	:=	objs
-LIBFT_PATH	:=	srcs/libft
+LIBFT_DIR	:=	libft
+LIBFT_PATH	:=	src/libft
+MLX_PATH	:=	minilibx-linux
 
 # **************************************************************************** #
 #                                    COLORS                                    #
@@ -55,7 +59,7 @@ endef
 INCLUDES	:=	$(strip $(INC))
 INCLD_FLAG	:=	$(addprefix -I , $(INCLUDES))
 
-# LIBFT#
+# LIBFT #
 LIBFT		:=	$(SRCS_DIR)/$(LIBFT_DIR)/libft.a
 define	LIB	:=
 				$(LIBFT)
@@ -63,14 +67,24 @@ define	LIB	:=
 endef
 LIB			:=	$(strip $(LIB))
 
+# MLX #
+MLX			:=	$(MLX_PATH)/libmlx.a
+
 # SOURCES #
 define	SRC	:=	
-				
+				$(addprefix $(PARSER_DIR)/, \
+					main.c \
+					parser.c \
+				)
+				$(addprefix $(ERR_DIR)/, \
+					error.c
+				)
+
 endef
 SRC			:=	$(strip $(SRC))
 
-OBJS 		:= $(patsubst %.c,$(OBJS_DIR)/%.o,$(SRC))
-DEPS		:= $(patsubst %.c,$(OBJS_DIR)/%.d,$(SRC))
+OBJS 		:=	$(patsubst %.c,$(OBJS_DIR)/%.o,$(SRC))
+DEPS		:=	$(patsubst %.c,$(OBJS_DIR)/%.d,$(SRC))
 
 
 # **************************************************************************** #
@@ -79,26 +93,26 @@ DEPS		:= $(patsubst %.c,$(OBJS_DIR)/%.d,$(SRC))
 
 all:	$(NAME)
 
+$(MLX):
+		@printf "\n\r\033[K[cub3d 🧊] \033[4;32mBuilding minilibx: $<\033[0m\n"
+		@make -sC $(MLX_PATH)
+		@printf "\n"
+
 $(LIBFT):
 	@printf "$(NEW)[libft 📖] $(U_GREEN)Building libft: $<$(DEFAULT)\n"
 	@make -C $(LIBFT_PATH)
 	@printf "\n"
 
-$(NAME): $(LIBFT) $(OBJS)
+$(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@printf "\r\033[K[cub3d 🧊] \033[4;32mBuilding cub3d: $<\033[0m"
-	@$(CC) $(OBJS) $(LDFLAGS) $(LIBFT) -o $(NAME)
+	@$(CC) $(OBJS) $(LDFLAGS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
 	@printf "\r\033[K[cub3d 🧊] \033[0;32mDone!\033[0m\n"
 
 -include $(DEPS)
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@printf "$(NEW)[cub3d 🧊] $(U_GREEN)Building:$(DEFAULT) $<"
 	@mkdir -p $(OBJS_DIR)
-	@mkdir -p $(OBJS_DIR)/$(BUILTIN_DIR)
-	@mkdir -p $(OBJS_DIR)/$(ENV_DIR)
-	@mkdir -p $(OBJS_DIR)/$(EXEC_DIR)
-	@mkdir -p $(OBJS_DIR)/$(EXIT_DIR)
-	@mkdir -p $(OBJS_DIR)/$(LEXER_DIR)
-	@mkdir -p $(OBJS_DIR)/$(MAIN_DIR)
+	@mkdir -p $(OBJS_DIR)/$(ERR_DIR)
 	@mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
 	@$(CC) $(DEP_FLAGS) $(CFLAGS) $(INCLD_FLAG) -c $< -o $@
 
