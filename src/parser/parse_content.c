@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 14:31:55 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/10 14:33:07 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	check_map_pos(t_game *game, char **content)
 			return (print_error(ERR_INVALID_MAP), FAILURE);
 		else if (content[i][j] == '1' && ft_strictcmp(content[pos - 1], "\n")
 			&& pos != game->input->map_start)
-			return (printf("caca\n"), print_error(ERR_INVALID_MAP), FAILURE);
+			return (print_error(ERR_INVALID_MAP), FAILURE);
 		i++;
 	}
 	return (SUCCESS);
