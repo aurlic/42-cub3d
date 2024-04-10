@@ -75,6 +75,9 @@ define	SRC	:=
 				$(addprefix $(PARSER_DIR)/, \
 					main.c \
 					parser.c \
+					parse_input.c \
+					parse_content.c \
+					parse_textures.c \
 				)
 				$(addprefix $(ERR_DIR)/, \
 					error.c

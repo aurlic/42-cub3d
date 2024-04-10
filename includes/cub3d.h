@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/09 18:33:56 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/10 14:22:42 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,32 @@
 /* STRUCTURES AND DATA */
 
 # define SUCCESS 0
-# define FAILURE -1
+# define FAILURE 1
 # define TMP 69
-# define WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
-# define FILE_NAME_ERR "Error 🤯\nFile passed as argument doesn't meet format \
+# define ERR_WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
+# define ERR_FILE_NAME "Error 🤯\nFile passed as argument doesn't meet format \
 format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
-# define FILE_OPEN_ERR "Error 🤯\nCouldn't open file.\n"
-# define DIR_ARG_ERR "Error 🤯\nDirectory passed as argument.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
+# define ERR_FILE_OPEN "Error 🤯\nCouldn't open file.\n"
+# define ERR_DIR_ARG "Error 🤯\nDirectory passed as argument.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
+# define ERR_MALLOC "Error 🤯\nMalloc failed.\n"
+# define ERR_INVALID_MAP "Error 🤯\nInvalid map (see subject for the map configuration details).\n"
+# define ERR_TEXTURES "Error 🤯\nInvalid textures format.\n"
+# define ERR_DUP_TEXTURES "Error 🤯\nDuplicate textures in file.\n"
 
 typedef struct s_input
 {
+	char	**content;
 	char	**map;
-	int		height;
-	int		width;
+	char	*wall_no;
+	char	*wall_so;
+	char	*wall_we;
+	char	*wall_ea;
+	int		color_f[3];
+	int		color_c[3];
+	int		map_h;
+	int		map_w;
+	int		map_start;
+	int		file_lines;
 }	t_input;
 
 typedef struct s_game
@@ -51,7 +64,14 @@ typedef struct s_game
 
 /* PARSER */
 /* parser.c */
-int		parser(char **av);
+int		parser(t_game *game, char **av);
+/* parse_input.c */
+int		check_arg_name(char *str);
+int		open_store_input(t_game *game, char *file);
+/* parse_content.c */
+int		parse_content(t_game *game);
+/* parse_textures.c */
+int		parse_textures(t_game *game, char **content);
 
 /* ERROR */
 /* error.c */
