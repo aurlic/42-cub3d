@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:42:58 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 14:34:42 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/10 14:36:57 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,26 +16,26 @@ static int	fill_identifier(t_game *game, char **texture)
 {
 	if (ft_strictcmp(texture[0], "N") || ft_strictcmp(texture[0], "NO"))
 	{
-		if (game->input->wall_no)
-			return (print_error(ERR_DUP_TEXTURES), FAILURE);
+		if (game->input->wall_no || texture[2])
+			return (print_error(ERR_TEXTURES), FAILURE);
 		game->input->wall_no = ft_strdup(texture[1]);
 	}
 	else if (ft_strictcmp(texture[0], "S") || ft_strictcmp(texture[0], "SO"))
 	{
-		if (game->input->wall_so)
-			return (print_error(ERR_DUP_TEXTURES), FAILURE);
+		if (game->input->wall_so || texture[2])
+			return (print_error(ERR_TEXTURES), FAILURE);
 		game->input->wall_so = ft_strdup(texture[1]);
 	}
 	else if (ft_strictcmp(texture[0], "W") || ft_strictcmp(texture[0], "WE"))
 	{
-		if (game->input->wall_we)
-			return (print_error(ERR_DUP_TEXTURES), FAILURE);
+		if (game->input->wall_we || texture[2])
+			return (print_error(ERR_TEXTURES), FAILURE);
 		game->input->wall_we = ft_strdup(texture[1]);
 	}
 	else if (ft_strictcmp(texture[0], "E") || ft_strictcmp(texture[0], "EA"))
 	{
-		if (game->input->wall_ea)
-			return (print_error(ERR_DUP_TEXTURES), FAILURE);
+		if (game->input->wall_ea || texture[2])
+			return (print_error(ERR_TEXTURES), FAILURE);
 		game->input->wall_ea = ft_strdup(texture[1]);
 	}
 	return (SUCCESS);
