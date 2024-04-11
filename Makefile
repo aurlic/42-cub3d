@@ -78,6 +78,8 @@ define	SRC	:=
 					parse_input.c \
 					parse_content.c \
 					parse_textures.c \
+					parse_colors.c \
+					remove_newlines.c \
 				)
 				$(addprefix $(ERR_DIR)/, \
 					error.c

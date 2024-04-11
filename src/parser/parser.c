@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:40:02 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 11:22:52 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/11 18:06:57 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ int	parser(t_game *game, char **av)
 	if (open_store_input(game, av[1]) == FAILURE)
 		return (FAILURE);
 	if (parse_content(game) == FAILURE)
+		return (FAILURE);
+	if (check_map(game) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

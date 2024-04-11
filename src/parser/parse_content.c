@@ -6,11 +6,38 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 12:10:12 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/11 16:03:31 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static int	store_map(t_game *game, char **content)
+{
+	int	i;
+	int	j;
+	int	map_lines;
+	
+	i = game->input->map_start;
+	map_lines = i;
+	j = 0;
+	while (content[map_lines] && !ft_strictcmp(content[map_lines], "\n"))
+		map_lines++;
+	game->input->map = ft_calloc(map_lines + 1, sizeof(char *));
+	if (!game->input->map)
+		return (print_error(ERR_MALLOC), FAILURE);
+	while (content[i] && i < map_lines)
+	{
+		game->input->map[j] = ft_strdup(content[i]);
+		if (!game->input->map[j])
+			return (print_error(ERR_MALLOC), FAILURE);
+		j++;
+		i++;
+	}
+	game->input->map_height = map_lines;
+	game->input->map[j] = NULL;
+	return (SUCCESS);
+}
 
 /**
  * @brief Check position of the map.
@@ -23,7 +50,7 @@
  * @param pos counter to track starting position of the map
  * @return SUCCESS if map placement is correct, or FAILURE if not.
  */
-int	check_map_pos(t_game *game, char **content, int pos)
+static int	check_map_pos(t_game *game, char **content, int pos)
 {
 	int	i;
 	int	j;
@@ -65,6 +92,10 @@ int	parse_content(t_game *game)
 	if (check_map_pos(game, game->input->content, 0) == FAILURE)
 		return (FAILURE);
 	if (parse_textures(game, game->input->content) == FAILURE)
+		return (FAILURE);
+	if (store_map(game, game->input->content) == FAILURE)
+		return (FAILURE);
+	if (remove_newlines(game) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

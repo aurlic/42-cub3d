@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 12:03:49 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/11 16:02:55 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ void	init_input(t_input *input)
 	input->color_c[0] = -1;
 	input->color_c[1] = -1;
 	input->color_c[2] = -1;
-	input->map_h = 0;
-	input->map_w = 0;
+	input->map_height = 0;
 	input->map_start = 0;
 	input->file_lines = 0;
 }
