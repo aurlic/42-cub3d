@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 15:46:40 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:03:49 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	init_input(t_input *input)
 	input->wall_so = NULL;
 	input->wall_we = NULL;
 	input->wall_ea = NULL;
-	input->color_f[0] = 0;
-	input->color_f[1] = 0;
-	input->color_f[2] = 0;
-	input->color_c[0] = 0;
-	input->color_c[1] = 0;
-	input->color_c[2] = 0;
+	input->color_f[0] = -1;
+	input->color_f[1] = -1;
+	input->color_f[2] = -1;
+	input->color_c[0] = -1;
+	input->color_c[1] = -1;
+	input->color_c[2] = -1;
 	input->map_h = 0;
 	input->map_w = 0;
 	input->map_start = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_content.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 15:56:34 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:10:12 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,20 @@
  * @brief Check position of the map.
  *
  * This function checks that the map is correctly placed at the end of the file.
+ * It also check that there is a map in the file.
  *
  * @param game game structure.
  * @param content content of the file
+ * @param pos counter to track starting position of the map
  * @return SUCCESS if map placement is correct, or FAILURE if not.
  */
-int	check_map_pos(t_game *game, char **content)
+int	check_map_pos(t_game *game, char **content, int pos)
 {
 	int	i;
 	int	j;
-	int	pos;
 	
-	i = 0;
-	pos = 0;
-	while (content[i])
+	i = -1;
+	while (content[++i])
 	{
 		j = 0;
 		while (content[i][j] == ' ')
@@ -42,11 +42,13 @@ int	check_map_pos(t_game *game, char **content)
 		}
 		if (content[i][j] != '1' && content[i][j] != '\n' && pos != 0)
 			return (print_error(ERR_INVALID_MAP), FAILURE);
-		else if (content[i][j] == '1' && ft_strictcmp(content[pos - 1], "\n")
+		else if (content[i][j] == '1' && (pos != 0
+			&& ft_strictcmp(content[pos - 1], "\n"))
 			&& pos != game->input->map_start)
 			return (print_error(ERR_INVALID_MAP), FAILURE);
-		i++;
 	}
+	if (game->input->map_start == 0)
+		return (print_error(ERR_INVALID_MAP), FAILURE);
 	return (SUCCESS);
 }
 
@@ -60,7 +62,7 @@ int	check_map_pos(t_game *game, char **content)
  */
 int	parse_content(t_game *game)
 {
-	if (check_map_pos(game, game->input->content) == FAILURE)
+	if (check_map_pos(game, game->input->content, 0) == FAILURE)
 		return (FAILURE);
 	if (parse_textures(game, game->input->content) == FAILURE)
 		return (FAILURE);

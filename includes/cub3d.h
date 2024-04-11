@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 16:56:16 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/11 12:08:41 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 # define SUCCESS 0
 # define FAILURE 1
 # define TMP 69
+# define NO 1001
+# define SO 1002
+# define WE 1003
+# define EA 1004
+# define TMP_ERR "YOUHOU CEST LA LE PROBLEME\n"
 # define ERR_WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
 # define ERR_FILE_NAME "Error 🤯\nFile passed as argument doesn't meet format \
 format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
@@ -37,6 +42,9 @@ format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cu
 # define ERR_MALLOC "Error 🤯\nMalloc failed.\n"
 # define ERR_INVALID_MAP "Error 🤯\nInvalid map (see subject for the map configuration details).\n"
 # define ERR_TEXTURES "Error 🤯\nInvalid textures format.\n"
+# define ERR_MISSING_TEXTURES "Error 🤯\nMissing textures.\n"
+# define ERR_INVALID_COLOR "Error 🤯\nInvalid color format.\n"
+# define ERR_MISSING_COLOR "Error 🤯\nMissing color.\n"
 
 typedef struct s_input
 {
