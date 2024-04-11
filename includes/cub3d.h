@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 14:36:42 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/10 16:56:16 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int		open_store_input(t_game *game, char *file);
 int		parse_content(t_game *game);
 /* parse_textures.c */
 int		parse_textures(t_game *game, char **content);
-
 /* ERROR */
 /* error.c */
 void	print_error(char *err_msg);

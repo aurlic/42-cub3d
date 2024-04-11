@@ -3,16 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:42:58 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 14:36:57 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/10 17:09:17 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static int	fill_identifier(t_game *game, char **texture)
+static int	check_valid_nb(char *texture)
+{
+	
+}
+
+static int	f_c_identifier(t_game *game, char **texture)
+{
+	int	i;
+	int	j;
+
+	if (ft_strictcmp(texture[0], "F"))
+	{
+		if (check_valid_nb(texture) == FAILURE)
+			return (print_error(ERR_TEXTURES), FAILURE);
+	}
+}
+
+static int	wall_identifier(t_game *game, char **texture)
 {
 	if (ft_strictcmp(texture[0], "N") || ft_strictcmp(texture[0], "NO"))
 	{
@@ -58,11 +75,11 @@ static int	parse_identifier(t_game *game, char *content)
 	texture = ft_split(content, ' ');
 	if (!texture[0])
 		return (free_matrix_safe(texture), SUCCESS);
-	// if (texture[2])
-	// 	return (free_matrix_safe(texture), print_error(ERR_TEXTURES), FAILURE);
-	if (fill_identifier(game, texture) == FAILURE)
+	if (wall_identifier(game, texture) == FAILURE)
 		return (free_matrix_safe(texture), FAILURE);
-	return (SUCCESS);
+	if (f_c_identifier(game, texture) == FAILURE)
+		return (free_matrix_safe(texture), FAILURE);
+	return (free_matrix_safe(texture), SUCCESS);
 }
 
 /**
@@ -83,12 +100,14 @@ int	parse_textures(t_game *game, char **content)
 	while (content[i] && i < game->input->map_start)
 	{
 		j = 0;
-		printf("%s", content[i]);
 		while (content[i][j] == ' ')
 			j++;
 		if (parse_identifier(game, content[i]) == FAILURE)
 			return (FAILURE); // need to write error;
 		i++;
 	}
+	if (!game->input->wall_no || !game->input->wall_so ||
+		!game->input->wall_ea || !game->input->wall_we)
+		return (print_error(ERR_TEXTURES), FAILURE);
 	return (SUCCESS);
 }

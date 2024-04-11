@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/10 13:29:13 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/10 15:46:40 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ int	main(int ac, char **av)
 	if (init_game(&game) == FAILURE)
 		exit(EXIT_FAILURE);
 	if (parser(&game, av) == FAILURE)
-		exit(TMP); 
+		exit(TMP);
 	return (EXIT_SUCCESS);
 }
