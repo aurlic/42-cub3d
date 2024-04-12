@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 12:14:21 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:30:08 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,5 @@ int	main(int ac, char **av)
 		exit(EXIT_FAILURE);
 	if (parser(&game, av) == FAILURE)
 		(free_game(&game), exit(EXIT_FAILURE));
-	
 	return (free_game(&game), EXIT_SUCCESS);
 }

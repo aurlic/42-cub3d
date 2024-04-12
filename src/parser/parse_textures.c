@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:42:58 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:10:06 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:31:20 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	fill_wall_textures(t_game *game, char **texture, int dir)
 	if (dir == NO)
 	{
 		if (game->input->wall_no || (texture[2] && texture[2][0] != '\n'))
-			return (print_error(ERR_TEXTURES), FAILURE); //err_dup_textures
+			return (print_error(ERR_TEXTURES), FAILURE);
 		game->input->wall_no = ft_strdup(texture[1]);
 	}
 	if (dir == SO)
@@ -105,7 +105,7 @@ static int	parse_identifier(t_game *game, char *content)
 	if (!texture[0])
 		return (free_matrix_safe(texture), SUCCESS);
 	if (texture[0][0] == '\n')
-		return(free_matrix_safe(texture), SUCCESS);
+		return (free_matrix_safe(texture), SUCCESS);
 	if (wall_identifier(game, texture) == FAILURE)
 		return (free_matrix_safe(texture), FAILURE);
 	if (color_identifier(game, content) == FAILURE)
@@ -134,11 +134,11 @@ int	parse_textures(t_game *game, char **content)
 		while (content[i][j] == ' ')
 			j++;
 		if (parse_identifier(game, content[i]) == FAILURE)
-			return (FAILURE); // need to write error;
+			return (FAILURE);
 		i++;
 	}
-	if (!game->input->wall_no || !game->input->wall_so ||
-		!game->input->wall_ea || !game->input->wall_we)
+	if (!game->input->wall_no || !game->input->wall_so
+		|| !game->input->wall_ea || !game->input->wall_we)
 		return (print_error(ERR_MISSING_TEXTURES), FAILURE);
 	i = 0;
 	while (i <= 2)

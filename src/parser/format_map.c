@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:29:04 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:25:58 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:32:02 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static char	**copy_map(t_game *game, char **map, int max_width)
 		{
 			if (is_map_char(map[i][j]) == SUCCESS)
 				cpy[i][j] = map[i][j];
-			else 
+			else
 				cpy[i][j] = '-';
 			j++;
 		}
@@ -98,7 +98,7 @@ static char	**copy_map(t_game *game, char **map, int max_width)
  * @param max_width maximum width of a line.
  * @return SUCCESS if fill was successful, FAILURE if not.
  */
-static char **fill_voids(char **rect_map, int max_width)
+static char	**fill_voids(char **rect_map, int max_width)
 {
 	int	i;
 	int	j;

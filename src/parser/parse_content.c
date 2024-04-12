@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:11:29 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:30:24 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	store_map(t_game *game, char **content)
 	int	i;
 	int	j;
 	int	map_lines;
-	
+
 	i = game->input->map_start;
 	map_lines = i;
 	j = 0;
@@ -64,7 +64,7 @@ static int	check_map_pos(t_game *game, char **content, int pos)
 {
 	int	i;
 	int	j;
-	
+
 	i = -1;
 	while (content[++i])
 	{

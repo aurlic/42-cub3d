@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:36:29 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:28:50 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:31:46 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	check_chars(char **map)
  * @param map game map.
  * @return SUCCESS if lines are valid, FAILURE if not.
  */
-static int check_middle_lines(t_game *game, char **map)
+static int	check_middle_lines(t_game *game, char **map)
 {
 	int	i;
 	int	j;
