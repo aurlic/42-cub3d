@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 17:01:14 by aurlic            #+#    #+#             */
-/*   Updated: 2024/02/16 10:34:02 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:38:42 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ char	**ft_split(char const *s, char c)
 	if (!s)
 		return (NULL);
 	ret = ft_calloc((ft_countwords(s, c) + 1), sizeof(*ret));
+	if (!ret)
+		return (NULL);
 	word = 0;
-	i = 0;
 	while (*s && ret)
 	{
 		i = 1;
