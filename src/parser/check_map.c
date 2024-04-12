@@ -6,12 +6,20 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:36:29 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 12:13:51 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:28:50 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Check map chars.
+ *
+ * This function check that the chars contained in the map are valid.
+ *
+ * @param map game map.
+ * @return SUCCESS if chars are valid, FAILURE if not.
+ */
 static int	check_chars(char **map)
 {
 	int	i;
@@ -41,6 +49,15 @@ static int	check_chars(char **map)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Check map walls.
+ *
+ * This function check that the middle lines of the map are valid.
+ *
+ * @param game game structure.
+ * @param map game map.
+ * @return SUCCESS if lines are valid, FAILURE if not.
+ */
 static int check_middle_lines(t_game *game, char **map)
 {
 	int	i;
@@ -70,6 +87,16 @@ static int check_middle_lines(t_game *game, char **map)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Check map walls.
+ *
+ * This function check that the map is closed with walls and that no floor is
+ * next to a '-'.
+ *
+ * @param game game structure.
+ * @param map game map.
+ * @return SUCCESS if map is valid, FAILURE if not.
+ */
 static int	check_closed(t_game *game, char **map)
 {
 	int	j;
@@ -94,6 +121,14 @@ static int	check_closed(t_game *game, char **map)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Check map validity.
+ *
+ * This function call the functions necessary to check that the map is valid.
+ *
+ * @param game game structure.
+ * @return SUCCESS if map is valid, FAILURE if not.
+ */
 int	check_map(t_game *game)
 {
 	if (check_chars(game->input->map) == FAILURE)

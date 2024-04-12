@@ -6,12 +6,22 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 11:17:42 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:11:29 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Store the mpa in the structure.
+ *
+ * This function cstore the whole mpa in the structure, and fill the map->height
+ * flag in the structure.
+ *
+ * @param game game structure.
+ * @param content content of the file
+ * @return SUCCESS if map placement is correct, or FAILURE if not.
+ */
 static int	store_map(t_game *game, char **content)
 {
 	int	i;

@@ -6,12 +6,21 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:03:39 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 12:17:08 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:19:50 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Convert an rbg string to int.
+ *
+ * This function converts an rgb string to an int. If also checks that each
+ * char is a digit, and that the value doesn't exceed 255.
+ * 
+ * @param str string containing the rgb values.
+ * @return res if convertion successful, or -1 if not.
+ */
 static int	rgb_atoi(char *str)
 {
 	int	i;
@@ -37,6 +46,16 @@ static int	rgb_atoi(char *str)
 	return (res);
 }
 
+/**
+ * @brief Fill the structure with the values.
+ *
+ * This function fills the structure with the color values.
+ *
+ * @param game game structure.
+ * @param content content of the file.
+ * @param c color identifier.
+ * @return SUCCESS if values are correctly formatted, or FAILURE if not.
+ */
 static int	fill_color_values(t_game *game, char **rgb, char c)
 {
 	int	i;
@@ -55,6 +74,18 @@ static int	fill_color_values(t_game *game, char **rgb, char c)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Check that the values are properly formatted.
+ *
+ * This function checks that the color are correctly formatted and then calls
+ * the function to fill the structure with the corresponding values.
+ *
+ * @param game game structure.
+ * @param content content of the file.
+ * @param i position of the color values.
+ * @param c color identifier.
+ * @return SUCCESS if structure filled properly, or FAILURE if not.
+ */
 static int	check_color_values(t_game *game, char *content, int i, char c)
 {
 	char	**rgb;
@@ -74,6 +105,17 @@ static int	check_color_values(t_game *game, char *content, int i, char c)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Call the function to fill the colors in the structure.
+ *
+ * This function checks string sent contains a correct color identifier
+ * ('C' or 'F'), and calls a function to fill the structure with the
+ * appropriate informations.
+ *
+ * @param game game structure.
+ * @param content content of the file.
+ * @return SUCCESS if color exists and is filled properly, or FAILURE if not.
+ */
 int	color_identifier(t_game *game, char *content)
 {
 	int	i;

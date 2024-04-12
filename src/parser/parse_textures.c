@@ -6,12 +6,22 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:42:58 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 14:04:25 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:10:06 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Fill the structure with textures.
+ *
+ * This function fills each wall texture in struct with the path sent.
+ *
+ * @param game game structure.
+ * @param texture texture matrix containing direction and path.
+ * @param dir cardinal direction
+ * @return SUCCESS if fill successfull, or FAILURE if not.
+ */
 static int	fill_wall_textures(t_game *game, char **texture, int dir)
 {
 	if (dir == NO)
@@ -41,6 +51,15 @@ static int	fill_wall_textures(t_game *game, char **texture, int dir)
 	return (SUCCESS);
 }
 
+/**
+ * @brief Remove EA and WE textures newlines.
+ *
+ * This function fills the wall textures according to their cardinal direction.
+ *
+ * @param game game structure.
+ * @param texture texture matrix containing direction and path.
+ * @return SUCCESS if fill successful, or FAILURE if not or if unknown char.
+ */
 static int	wall_identifier(t_game *game, char **texture)
 {
 	if (ft_strictcmp(texture[0], "N") || ft_strictcmp(texture[0], "NO"))
@@ -64,14 +83,14 @@ static int	wall_identifier(t_game *game, char **texture)
 			return (FAILURE);
 	}
 	else if (!ft_strictcmp(texture[0], "F") && !ft_strictcmp(texture[0], "C"))
-		return (print_error(ERR_TEXTURES), FAILURE); //err unidentified texture
+		return (print_error(ERR_TEXTURES), FAILURE);
 	return (SUCCESS);
 }
 
 /**
  * @brief Parse the identifier.
  *
- * This function splits the line passed as parameter and call the function to
+ * This function splits the line passed as parameter and calls the functions to
  * fill the structure.
  *
  * @param game game structure.

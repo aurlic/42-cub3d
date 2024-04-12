@@ -6,12 +6,18 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:29:04 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 12:07:06 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 14:25:58 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Get the biggest width in the map.
+ *
+ * @param map base map.
+ * @return max_width.
+ */
 static int	get_max_width(char **map)
 {
 	int	i;
@@ -28,6 +34,12 @@ static int	get_max_width(char **map)
 	return (max_width);
 }
 
+/**
+ * @brief Check character validity.
+ *
+ * @param c char to check.
+ * @return SUCCESS if char is valid, FAILURE if not.
+ */
 static int	is_map_char(char c)
 {
 	if (c == '0' || c == '1')
@@ -37,6 +49,17 @@ static int	is_map_char(char c)
 	return (FAILURE);
 }
 
+/**
+ * @brief Copy old map.
+ *
+ * This function creates a copy of the base map, in a matrix ready to be filled
+ * with '-', and with lines allocated with more memory.
+ *
+ * @param game game structure.
+ * @param map base map.
+ * @param max_width maximum width of a line.
+ * @return SUCCESS if copy was successful, FAILURE if not.
+ */
 static char	**copy_map(t_game *game, char **map, int max_width)
 {
 	int		i;
@@ -66,6 +89,15 @@ static char	**copy_map(t_game *game, char **map, int max_width)
 	return (cpy);
 }
 
+/**
+ * @brief Fill voids in lines.
+ *
+ * This function replaces the '\0' trailing with '-', up to max_width.
+ * 
+ * @param rect_map new rectangle map.
+ * @param max_width maximum width of a line.
+ * @return SUCCESS if fill was successful, FAILURE if not.
+ */
 static char **fill_voids(char **rect_map, int max_width)
 {
 	int	i;
@@ -87,6 +119,16 @@ static char **fill_voids(char **rect_map, int max_width)
 	return (rect_map);
 }
 
+/**
+ * @brief Convert base map to rectangle.
+ *
+ * This function calls the functions necessary to convert the base map to a
+ * rectangle map, for easier parsing.
+ * 
+ * @param game game structure.
+ * @param map map matrix.
+ * @return SUCCESS if map is correctly changed to a rectangle, FAILURE if not.
+ */
 int	map_to_rectangle(t_game *game, char **map)
 {
 	int		max_width;
