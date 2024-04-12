@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 16:03:31 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:17:42 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	store_map(t_game *game, char **content)
 		j++;
 		i++;
 	}
-	game->input->map_height = map_lines;
+	game->input->map_height = map_lines - game->input->map_start;
 	game->input->map[j] = NULL;
 	return (SUCCESS);
 }

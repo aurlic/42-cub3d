@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 16:07:41 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:30:11 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cu
 # define ERR_INVALID_COLOR "Error 🤯\nInvalid color format.\n"
 # define ERR_MISSING_COLOR "Error 🤯\nMissing color.\n"
 # define ERR_INVALID_CHAR "Error 🤯\nInvalid char (see subject for the map configuration details).\n"
-# define ERR_MULT_PLAYER "Error 🤯\nMultiple player start positions (see subject for the map configuration details).\n"
+# define ERR_MULT_PLAYER "Error 🤯\nWrong player start configuration (see subject for the map configuration details).\n"
 
 typedef struct s_input
 {
@@ -85,7 +85,9 @@ int		color_identifier(t_game *game, char *content);
 /* remove_newlines.c */
 int		remove_newlines(t_game *game);
 /* check_map.c */
-
+int	check_map(t_game *game);
+/* format_map.c */
+int		map_to_rectangle(t_game *game, char **map);
 
 /* ERROR */
 /* error.c */

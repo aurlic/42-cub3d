@@ -80,6 +80,8 @@ define	SRC	:=
 					parse_textures.c \
 					parse_colors.c \
 					remove_newlines.c \
+					check_map.c \
+					format_map.c \
 				)
 				$(addprefix $(ERR_DIR)/, \
 					error.c
