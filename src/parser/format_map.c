@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:29:04 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 11:31:03 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:31:53 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,18 +99,5 @@ int	map_to_rectangle(t_game *game, char **map)
 	rect_map = fill_voids(rect_map, max_width);
 	free(map);
 	game->input->map = rect_map;
-	int	i = 0;
-	int	j;
-	while (game->input->map[i])
-	{
-		j = 0;
-		while (j < max_width)
-		{
-			printf("%c", game->input->map[i][j]);
-			j++;
-		}
-		printf("\n");
-		i++;
-	}
 	return (SUCCESS);
 }
