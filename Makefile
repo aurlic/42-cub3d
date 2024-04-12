@@ -20,7 +20,7 @@ MLX_FLAGS	:=	-lX11 -lXext
 
 SRCS_DIR 	:=	src
 PARSER_DIR	:=	parser
-ERR_DIR		:=	error
+CORE_DIR	:=	core
 INCLD_DIR 	:=	includes
 OBJS_DIR 	:=	objs
 LIBFT_DIR	:=	libft
@@ -73,7 +73,6 @@ MLX			:=	$(MLX_PATH)/libmlx.a
 # SOURCES #
 define	SRC	:=	
 				$(addprefix $(PARSER_DIR)/, \
-					main.c \
 					parser.c \
 					parse_input.c \
 					parse_content.c \
@@ -83,8 +82,10 @@ define	SRC	:=
 					check_map.c \
 					format_map.c \
 				)
-				$(addprefix $(ERR_DIR)/, \
-					error.c
+				$(addprefix $(CORE_DIR)/, \
+					main.c \
+					init.c \
+					error.c \
 				)
 
 endef
@@ -119,7 +120,7 @@ $(NAME): $(LIBFT) $(MLX) $(OBJS)
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@printf "$(NEW)[cub3d 🧊] $(U_GREEN)Building:$(DEFAULT) $<"
 	@mkdir -p $(OBJS_DIR)
-	@mkdir -p $(OBJS_DIR)/$(ERR_DIR)
+	@mkdir -p $(OBJS_DIR)/$(CORE_DIR)
 	@mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
 	@$(CC) $(DEP_FLAGS) $(CFLAGS) $(INCLD_FLAG) -c $< -o $@
 

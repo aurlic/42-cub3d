@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:29:04 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 11:31:53 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 12:07:06 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	map_to_rectangle(t_game *game, char **map)
 	if (!rect_map)
 		return (print_error(ERR_MALLOC), FAILURE);
 	rect_map = fill_voids(rect_map, max_width);
-	free(map);
+	free_matrix_safe(map);
 	game->input->map = rect_map;
 	return (SUCCESS);
 }

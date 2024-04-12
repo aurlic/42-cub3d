@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 15:36:44 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 15:41:19 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:59:29 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ static int	remove_map_newlines(t_game *game)
 			tmp = game->input->map[i];
 			game->input->map[i] = ft_strndup(tmp, ft_strlen(tmp) - 1);
 			if (!game->input->map[i])
-				return (print_error(ERR_MALLOC), FAILURE);
+				return (free(tmp), print_error(ERR_MALLOC), FAILURE);
 			free(tmp);
 		}
 		i++;

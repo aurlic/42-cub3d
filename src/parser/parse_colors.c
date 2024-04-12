@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:03:39 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 14:05:07 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 12:17:08 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ static int	check_color_values(t_game *game, char *content, int i, char c)
 	rgb = ft_split(content + i, ',');
 	if (!rgb)
 		return (print_error(ERR_MALLOC), FAILURE);
-	if (rgb[3] || !rgb[2])
-		return (print_error(ERR_INVALID_COLOR), FAILURE);
+	if (!rgb[2] || rgb[3])
+		return (free_matrix_safe(rgb), print_error(ERR_INVALID_COLOR), FAILURE);
 	if (fill_color_values(game, rgb, c) == FAILURE)
-		return (FAILURE);
-	//if (c == 'F')
+		return (free_matrix_safe(rgb), FAILURE);
+	free_matrix_safe(rgb);
 	return (SUCCESS);
 }
 

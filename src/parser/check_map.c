@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:36:29 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 11:30:01 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 12:13:51 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ static int	check_closed(t_game *game, char **map)
 			return (print_error(ERR_INVALID_MAP), FAILURE);
 		j++;
 	}
-	check_middle_lines(game, map);
+	if (check_middle_lines(game, map) == FAILURE)
+		return (FAILURE);
 	j = 0;
 	while (map[game->input->map_height - 1][j])
 	{
@@ -95,11 +96,11 @@ static int	check_closed(t_game *game, char **map)
 
 int	check_map(t_game *game)
 {
-	if (check_chars(game->input->map) == FAILURE) //1
+	if (check_chars(game->input->map) == FAILURE)
 		return (FAILURE);
 	if (map_to_rectangle(game, game->input->map) == FAILURE)
 		return (FAILURE);
-	if (check_closed(game, game->input->map) == FAILURE) //2
+	if (check_closed(game, game->input->map) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

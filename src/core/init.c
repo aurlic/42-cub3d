@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/11 16:02:55 by aurlic           ###   ########.fr       */
+/*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
+/*   Updated: 2024/04/12 11:56:57 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_input(t_input *input)
+static void	init_input(t_input *input)
 {
 	input->content = NULL;
 	input->map = NULL;
@@ -41,17 +41,4 @@ int	init_game(t_game *game)
 	init_input(input);
 	game->input = input;
 	return (SUCCESS);
-}
-
-int	main(int ac, char **av)
-{
-	t_game	game;
-
-	if (ac != 2)
-		(print_error(ERR_WRONG_ARG_NB), exit(EXIT_FAILURE));
-	if (init_game(&game) == FAILURE)
-		exit(EXIT_FAILURE);
-	if (parser(&game, av) == FAILURE)
-		exit(TMP);
-	return (EXIT_SUCCESS);
 }

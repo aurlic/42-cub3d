@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 11:30:11 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/12 11:42:41 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,13 @@ typedef struct s_game
 
 /* PROTOTYPES */
 
+/* CORE */
+/* error.c */
+void	print_error(char *err_msg);
+void	free_game(t_game *game);
+/* init.c */
+int		init_game(t_game *game);
+
 /* PARSER */
 /* parser.c */
 int		parser(t_game *game, char **av);
@@ -88,9 +95,5 @@ int		remove_newlines(t_game *game);
 int	check_map(t_game *game);
 /* format_map.c */
 int		map_to_rectangle(t_game *game, char **map);
-
-/* ERROR */
-/* error.c */
-void	print_error(char *err_msg);
 
 #endif
