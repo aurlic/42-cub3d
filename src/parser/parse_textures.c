@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 13:42:58 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:41:14 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/16 09:34:57 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static int	parse_identifier(t_game *game, char *content)
 {
 	char	**texture;
 
-	texture = ft_split(content, ' ');\
+	texture = ft_split(content, ' ');
 	if (!texture || !texture[0])
 		return (free_matrix_safe(texture), SUCCESS);
 	if (texture[0][0] == '\n')
