@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 11:42:41 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/16 16:02:00 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@
 # define SO 1002
 # define WE 1003
 # define EA 1004
+# define WIN_W 320
+# define WIN_H 200
+# define FOV 60
+# define PLAYER_SPEED 0.1
+# define ROTATION_SPEED 0.05
+# define MOUSE_CLOSE 17
 # define TMP_ERR "YOUHOU CEST LA LE PROBLEME\n"
 # define ERR_WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
 # define ERR_FILE_NAME "Error 🤯\nFile passed as argument doesn't meet format \
@@ -63,9 +69,28 @@ typedef struct s_input
 	int		file_lines;
 }	t_input;
 
+typedef struct s_player
+{
+	double	pos_x;
+	double	pos_y;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
+	double	speed;
+}	t_player;
+
+typedef struct s_libx
+{
+	void	*mlx;
+	void	*win;
+}	t_libx;
+
 typedef struct s_game
 {
-	t_input	*input;
+	t_input		*input;
+	t_libx		*libx;
+	t_player	*player;
 }	t_game;
 
 /* PROTOTYPES */
@@ -74,6 +99,7 @@ typedef struct s_game
 /* error.c */
 void	print_error(char *err_msg);
 void	free_game(t_game *game);
+int		exit_game(t_game *game);
 /* init.c */
 int		init_game(t_game *game);
 
@@ -96,4 +122,7 @@ int	check_map(t_game *game);
 /* format_map.c */
 int		map_to_rectangle(t_game *game, char **map);
 
+
+/* RAYCASTING */
+/* raycasting.h */
 #endif

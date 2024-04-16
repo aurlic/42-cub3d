@@ -6,14 +6,14 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/10 11:25:17 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:30:24 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/16 11:30:35 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 /**
- * @brief Store the mpa in the structure.
+ * @brief Store the map in the structure.
  *
  * This function cstore the whole mpa in the structure, and fill the map->height
  * flag in the structure.

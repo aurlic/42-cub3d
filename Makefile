@@ -20,6 +20,7 @@ MLX_FLAGS	:=	-lX11 -lXext
 
 SRCS_DIR 	:=	src
 PARSER_DIR	:=	parser
+RAYCAST_DIR	:=	raycasting
 CORE_DIR	:=	core
 INCLD_DIR 	:=	includes
 OBJS_DIR 	:=	objs
@@ -87,6 +88,9 @@ define	SRC	:=
 					init.c \
 					error.c \
 				)
+				$(addprefix $(RAYCAST_DIR)/, \
+					raycasting.c \
+				)
 
 endef
 SRC			:=	$(strip $(SRC))
@@ -122,6 +126,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)
 	@mkdir -p $(OBJS_DIR)/$(CORE_DIR)
 	@mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
+	@mkdir -p $(OBJS_DIR)/$(RAYCAST_DIR)
 	@$(CC) $(DEP_FLAGS) $(CFLAGS) $(INCLD_FLAG) -c $< -o $@
 
 clean:
