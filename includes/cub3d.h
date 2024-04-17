@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/16 16:02:00 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:26:27 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define EA 1004
 # define WIN_W 320
 # define WIN_H 200
-# define FOV 60
+// # define FOV 66
 # define PLAYER_SPEED 0.1
 # define ROTATION_SPEED 0.05
 # define MOUSE_CLOSE 17
@@ -69,6 +69,21 @@ typedef struct s_input
 	int		file_lines;
 }	t_input;
 
+typedef struct s_ray
+{
+	double	ray_dir_x;
+	double	ray_dir_y;
+	double	side_dist_x;
+	double	side_dist_y;
+	double	delta_dist_x;
+	double	delta_dist_y;
+	int		map_x;
+	int		map_y;
+	int		step_x;
+	int		step_y;
+	int		side;
+}	t_ray;
+
 typedef struct s_player
 {
 	double	pos_x;
@@ -77,7 +92,7 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
-	double	speed;
+
 }	t_player;
 
 typedef struct s_libx
@@ -91,6 +106,7 @@ typedef struct s_game
 	t_input		*input;
 	t_libx		*libx;
 	t_player	*player;
+	t_ray		*ray;
 }	t_game;
 
 /* PROTOTYPES */

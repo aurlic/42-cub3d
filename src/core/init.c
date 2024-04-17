@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/16 13:50:04 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/17 18:26:32 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,23 @@ static void	init_player(t_player *player)
 	player->pos_y = 0;
 	player->dir_x = 0;
 	player->dir_y = 0;
+	player->plane_x = 0;
+	player->plane_y = 0;
+}
+
+static void	init_ray(t_ray *ray)
+{
+	ray->ray_dir_x = 0;
+	ray->ray_dir_y = 0;
+	ray->side_dist_x = 0;
+	ray->side_dist_y = 0;
+	ray->delta_dist_x = 0;
+	ray->delta_dist_y = 0;
+	ray->map_x = 0;
+	ray->map_y = 0;
+	ray->step_x = 0;
+	ray->step_y = 0;
+	ray->side = 0;
 }
 
 int	init_game(t_game *game)
@@ -50,6 +67,7 @@ int	init_game(t_game *game)
 	t_input		*input;
 	t_libx		*libx;
 	t_player	*player;
+	t_ray		*ray;
 
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
@@ -66,5 +84,10 @@ int	init_game(t_game *game)
 		return (print_error(ERR_MALLOC), FAILURE);
 	init_player(player);
 	game->player = player;
+	ray = ft_calloc(1, sizeof(t_ray));
+	if (!ray)
+		return (print_error(ERR_MALLOC), FAILURE);
+	init_ray(ray);
+	game->ray = ray;
 	return (SUCCESS);
 }
