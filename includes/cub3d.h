@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/17 18:26:27 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/18 15:24:17 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_ray
 	int		step_x;
 	int		step_y;
 	int		side;
+	double	perp_wall_dist;
 }	t_ray;
 
 typedef struct s_player
@@ -95,6 +96,13 @@ typedef struct s_player
 
 }	t_player;
 
+typedef struct s_draw
+{
+	int		wall_height;
+	int		draw_start;
+	int		draw_end;
+}	t_draw;
+
 typedef struct s_libx
 {
 	void	*mlx;
@@ -107,6 +115,7 @@ typedef struct s_game
 	t_libx		*libx;
 	t_player	*player;
 	t_ray		*ray;
+	t_draw		*draw;
 }	t_game;
 
 /* PROTOTYPES */

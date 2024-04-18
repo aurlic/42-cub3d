@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/18 10:33:17 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/18 15:35:25 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
 
 static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 {
-	double	camera_x; // arrivee du rayon sur axe plane
+	double	camera_x;
 
 	camera_x = 2 * x / (double)WIN_W - 1;
 	ray->ray_dir_x = player->dir_x + player->plane_x * camera_x;
@@ -136,11 +136,25 @@ static void init_dda(t_game *game, t_player *player, t_ray *ray)
 	}
 }
 
-static void	raycaster(t_game *game, t_player *player, t_ray *ray)
+static void	calc_wall_height(t_game *game, t_ray *ray, t_draw *draw)
 {
-	int		x; // colonne par colonne pour balayer tout le champ de vision
-	double	perp_wall_dist; // longueur du rayon qui a touche le mur
+	if (ray->side == 0)
+		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
+	else
+		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
+	draw->wall_height = (int)(WIN_H / ray->perp_wall_dist);
+	draw->draw_start = (draw->wall_height * -1) / 2 + WIN_H / 2;
+	if (draw->draw_start < 0)
+		draw->draw_start = 0;
+	draw->draw_end = draw->wall_height / 2 + WIN_H /2;
+	if (draw->draw_end >= WIN_H)
+		draw->draw_end = WIN_H - 1;
+}
 
+static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
+{
+	int		x;
+	
 	ray->map_x = (int)player->pos_x;
 	ray->map_y = (int)player->pos_y;
 	x = 0;
@@ -149,6 +163,7 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray)
 		init_ray(game, player, ray, x);
 		init_dda(game, player, ray);
 		dda_algo(game, player, ray);
+		calc_wall_height(game, ray, draw);
 		x++;  
 	}
 }
@@ -156,5 +171,5 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray)
 int	raycasting(t_game *game)
 {
 	get_player_start_pos(game, game->input->map);
-	raycaster(game, game->player, game->ray);
+	raycaster(game, game->player, game->ray, game->draw);
 }

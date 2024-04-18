@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/17 18:26:32 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/18 15:35:45 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ static void	init_ray(t_ray *ray)
 	ray->step_x = 0;
 	ray->step_y = 0;
 	ray->side = 0;
+	ray->perp_wall_dist = 0;
+}
+
+static void	init_draw(t_draw *draw)
+{
+	draw->wall_height = 0;
+	draw->draw_start = 0;
+	draw->draw_end = 0;
 }
 
 int	init_game(t_game *game)
@@ -68,6 +76,7 @@ int	init_game(t_game *game)
 	t_libx		*libx;
 	t_player	*player;
 	t_ray		*ray;
+	t_draw		*draw;
 
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
@@ -89,5 +98,10 @@ int	init_game(t_game *game)
 		return (print_error(ERR_MALLOC), FAILURE);
 	init_ray(ray);
 	game->ray = ray;
+	draw = ft_calloc(1, sizeof(t_draw));
+	if (!draw)
+		return (print_error(ERR_MALLOC), FAILURE);
+	init_draw(draw);
+	game->draw = draw;
 	return (SUCCESS);
 }
