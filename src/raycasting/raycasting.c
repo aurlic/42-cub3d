@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 10:55:24 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/19 12:06:04 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,21 @@ static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
+/**
+ * @brief Init the DDA.
+ *
+ * This function initializes the DDA (Digital Differential Analyzer) before we
+ * can actually start using this algorithm. To do so, we have to calculate
+ * some values (step_x, step_y, side_dist_x, side_dist_y). The step values are
+ * based on the sign (- OR +) of the ray direction. The side_dist values
+ * represent the perpendicular distance from the ray's starting position to the
+ * nearest side of the wall it touches (adjusted and base and ray's direction
+ * and position).
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ */
 static void init_dda(t_game *game, t_player *player, t_ray *ray)
 {
 	if (ray->ray_dir_x < 0)
@@ -136,6 +151,21 @@ static void init_dda(t_game *game, t_player *player, t_ray *ray)
 	}
 }
 
+/**
+ * @brief Wall height calculation.
+ *
+ * This function calculates the height of the wall given the info gathered with
+ * the ray. To avoid getting a warped view (fisheye effect), the distance to the
+ * wall isn't always calculated starting from player position, but rather it is
+ * calculated relatively to the camera plane (what we view when playing). To do
+ * so we calculate the shortest distance from a point (where the ray hit the
+ * wall) to a line (the camera plane).
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ * @param draw structure containing data to draw.
+ */
 static void	calc_wall_height(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	if (ray->side == 0)
@@ -156,6 +186,18 @@ static void	calc_wall_height(t_game *game, t_player *player, t_ray *ray, t_draw 
 	draw->wall_x -= floor(draw->wall_x);
 }
 
+/**
+ * @brief Raycasting function.
+ *
+ * This function first set map_x and map_y to starting position of the player,
+ * then calls the different functions to handle the raycasting. One ray is sent
+ * for each pixel of the width of the screen.
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ * @param draw structure containing data to draw.
+ */
 static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	int		x;
@@ -173,8 +215,18 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 	}
 }
 
+/**
+ * @brief Handle the raycasting.
+ *
+ * This function calls the functions necessary to get the player start
+ * position, and start the raycasting.
+ *
+ * @param game game structure.
+ * @return SUCCESS if raycasting worked, FAILURE if not.
+ */
 int	raycasting(t_game *game)
 {
 	get_player_start_pos(game, game->input->map);
 	raycaster(game, game->player, game->ray, game->draw);
+	return (SUCCESS);
 }
