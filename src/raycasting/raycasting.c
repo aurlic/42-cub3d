@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
 /*   Updated: 2024/04/19 15:15:41 by traccurt         ###   ########.fr       */
@@ -12,6 +12,19 @@
 
 #include "cub3d.h"
 
+/**
+ * @brief Fill player values for North and South.
+ *
+ * This function update the player structure with values depending on the
+ * direction the player is facing when starting. It also adjusts the camera
+ * plane, which determines the direction and size of the player's FOV (field of
+ * view)
+ *
+ * @param game game structure.
+ * @param dir direction of the player.
+ * @param i position of the player.
+ * @param j position of the player.
+ */
 static void fill_ns_pos(t_game *game, char dir, int i, int j)
 {
 	game->player->pos_x = j + 0,5;
@@ -31,6 +44,19 @@ static void fill_ns_pos(t_game *game, char dir, int i, int j)
 	}
 }
 
+/**
+ * @brief Fill player values for West and East.
+ *
+ * This function update the player structure with values depending on the
+ * direction the player is facing when starting. It also adjusts the camera
+ * plane, which determines the direction and size of the player's FOV (field of
+ * view)
+ *
+ * @param game game structure.
+ * @param dir direction of the player.
+ * @param i position of the player.
+ * @param j position of the player.
+ */
 static void fill_we_pos(t_game *game, char dir, int i, int j)
 {
 	game->player->pos_x = j + 0,5;
@@ -50,6 +76,16 @@ static void fill_we_pos(t_game *game, char dir, int i, int j)
 	}
 }
 
+/**
+ * @brief Get player starting position.
+ *
+ * This function iterates through the map to find the starting position of the
+ * player and then depending on which direction he is facing, calls a function
+ * to fill the values in the player structure.
+ *
+ * @param game game structure.
+ * @param map map matrix
+ */
 static void	get_player_start_pos(t_game *game, char **map)
 {
 	int	i;
@@ -71,6 +107,18 @@ static void	get_player_start_pos(t_game *game, char **map)
 	}
 }
 
+/**
+ * @brief DDA algorithnm.
+ *
+ * This function executes the operations necessary for the DDA algorithm. It
+ * will loop until the ray "touches" a wall. At each step, it calculates the
+ * distance to the next x and y side of the grid cell, and determines which
+ * direction the ray should move based on these distances.
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ */
 static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
 {
 	int	hit;
@@ -95,6 +143,25 @@ static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
 	}
 }
 
+/**
+ * @brief Init the ray.
+ *
+ * This function initializes the ray by calculating its direction and delta
+ * distances (In simpler terms, the "delta distance" refers to the distance
+ * between each step that the ray takes along the x and y axes as it moves
+ * through the map).
+ * The ray direction (ray_dir_x and ray_dir_y) depends on the player's and
+ * camera's positions.
+ * delta_dist_x and delta_dist_y are the distances between each step that
+ * the ray takes on the x and y axis. They represent how far the ray needs to 
+ * move horizontally and vertically to reach the next intersection with a grid
+ * cell in the map.
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ * @param x pixel of the screen the ray is casted to.
+ */
 static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 {
 	double	camera_x;
@@ -112,6 +179,21 @@ static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
+/**
+ * @brief Init the DDA.
+ *
+ * This function initializes the DDA (Digital Differential Analyzer) before we
+ * can actually start using this algorithm. To do so, we have to calculate
+ * some values (step_x, step_y, side_dist_x, side_dist_y). The step values are
+ * based on the sign (- OR +) of the ray direction. The side_dist values
+ * represent the perpendicular distance from the ray's starting position to the
+ * nearest side of the wall it touches (adjusted and base and ray's direction
+ * and position).
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ */
 static void init_dda(t_game *game, t_player *player, t_ray *ray)
 {
 	if (ray->ray_dir_x < 0)
@@ -136,6 +218,21 @@ static void init_dda(t_game *game, t_player *player, t_ray *ray)
 	}
 }
 
+/**
+ * @brief Wall height calculation.
+ *
+ * This function calculates the height of the wall given the info gathered with
+ * the ray. To avoid getting a warped view (fisheye effect), the distance to the
+ * wall isn't always calculated starting from player position, but rather it is
+ * calculated relatively to the camera plane (what we view when playing). To do
+ * so we calculate the shortest distance from a point (where the ray hit the
+ * wall) to a line (the camera plane).
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ * @param draw structure containing data to draw.
+ */
 static void	calc_wall_height(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	if (ray->side == 0)
@@ -179,9 +276,20 @@ static void	update_tex(t_ray *ray, t_draw *draw)
 	draw->tex_x = (int)(draw->wall_x * TEX_SIDE);
 	if ((ray->side == 0 && ray->ray_dir_x > 0) || (ray->side == 1 && ray->ray_dir_y < 0))
 		draw->tex_x = TEX_SIDE - draw->tex_x - 1;
-	
 }
 
+/**
+ * @brief Raycasting function.
+ *
+ * This function first set map_x and map_y to starting position of the player,
+ * then calls the different functions to handle the raycasting. One ray is sent
+ * for each pixel of the width of the screen.
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ * @param draw structure containing data to draw.
+ */
 static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	int		x;
@@ -201,8 +309,18 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 	}
 }
 
+/**
+ * @brief Handle the raycasting.
+ *
+ * This function calls the functions necessary to get the player start
+ * position, and start the raycasting.
+ *
+ * @param game game structure.
+ * @return SUCCESS if raycasting worked, FAILURE if not.
+ */
 int	raycasting(t_game *game)
 {
 	get_player_start_pos(game, game->input->map);
 	raycaster(game, game->player, game->ray, game->draw);
+	return (SUCCESS);
 }
