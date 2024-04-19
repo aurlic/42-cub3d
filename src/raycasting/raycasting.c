@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 10:55:24 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:15:41 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,32 @@ static void	calc_wall_height(t_game *game, t_player *player, t_ray *ray, t_draw 
 	draw->wall_x -= floor(draw->wall_x);
 }
 
+static void	set_texture_index(t_ray *ray, t_draw *draw)
+{
+	if (ray->side == 1)
+	{
+		if (ray->ray_dir_y < 0)
+			draw->tex_dir = NO;
+		else
+			draw->tex_dir = SO;
+	}
+	else
+	{
+		if (ray->delta_dist_x < 0)
+			draw->tex_dir = WE;
+		else
+			draw->tex_dir = EA;
+	}
+}
+
+static void	update_tex(t_ray *ray, t_draw *draw)
+{
+	draw->tex_x = (int)(draw->wall_x * TEX_SIDE);
+	if ((ray->side == 0 && ray->ray_dir_x > 0) || (ray->side == 1 && ray->ray_dir_y < 0))
+		draw->tex_x = TEX_SIDE - draw->tex_x - 1;
+	
+}
+
 static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	int		x;
@@ -169,6 +195,8 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 		init_dda(game, player, ray);
 		dda_algo(game, player, ray);
 		calc_wall_height(game, player, ray, draw);
+		set_texture_index(ray, draw);
+		update_tex(ray, draw);
 		x++;  
 	}
 }
