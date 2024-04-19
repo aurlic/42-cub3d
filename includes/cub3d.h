@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 10:16:56 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/19 15:15:42 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define EA 1004
 # define WIN_W 320
 # define WIN_H 200
-// # define FOV 66
+# define TEX_SIDE 64
 # define PLAYER_SPEED 0.1
 # define ROTATION_SPEED 0.05
 # define MOUSE_CLOSE 17
@@ -102,6 +102,8 @@ typedef struct s_draw
 	int		draw_start;
 	int		draw_end;
 	double	wall_x;
+	int		tex_dir;
+	int		tex_x;
 }	t_draw;
 
 typedef struct s_libx
