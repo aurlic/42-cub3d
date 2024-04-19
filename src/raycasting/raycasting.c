@@ -6,12 +6,25 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 12:06:04 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/19 15:09:13 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+/**
+ * @brief Fill player values for North and South.
+ *
+ * This function update the player structure with values depending on the
+ * direction the player is facing when starting. It also adjusts the camera
+ * plane, which determines the direction and size of the player's FOV (field of
+ * view)
+ *
+ * @param game game structure.
+ * @param dir direction of the player.
+ * @param i position of the player.
+ * @param j position of the player.
+ */
 static void fill_ns_pos(t_game *game, char dir, int i, int j)
 {
 	game->player->pos_x = j + 0,5;
@@ -31,6 +44,19 @@ static void fill_ns_pos(t_game *game, char dir, int i, int j)
 	}
 }
 
+/**
+ * @brief Fill player values for West and East.
+ *
+ * This function update the player structure with values depending on the
+ * direction the player is facing when starting. It also adjusts the camera
+ * plane, which determines the direction and size of the player's FOV (field of
+ * view)
+ *
+ * @param game game structure.
+ * @param dir direction of the player.
+ * @param i position of the player.
+ * @param j position of the player.
+ */
 static void fill_we_pos(t_game *game, char dir, int i, int j)
 {
 	game->player->pos_x = j + 0,5;
@@ -50,6 +76,16 @@ static void fill_we_pos(t_game *game, char dir, int i, int j)
 	}
 }
 
+/**
+ * @brief Get player starting position.
+ *
+ * This function iterates through the map to find the starting position of the
+ * player and then depending on which direction he is facing, calls a function
+ * to fill the values in the player structure.
+ *
+ * @param game game structure.
+ * @param map map matrix
+ */
 static void	get_player_start_pos(t_game *game, char **map)
 {
 	int	i;
@@ -71,6 +107,18 @@ static void	get_player_start_pos(t_game *game, char **map)
 	}
 }
 
+/**
+ * @brief DDA algorithnm.
+ *
+ * This function executes the operations necessary for the DDA algorithm. It
+ * will loop until the ray "touches" a wall. At each step, it calculates the
+ * distance to the next x and y side of the grid cell, and determines which
+ * direction the ray should move based on these distances.
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ */
 static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
 {
 	int	hit;
@@ -95,6 +143,25 @@ static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
 	}
 }
 
+/**
+ * @brief Init the ray.
+ *
+ * This function initializes the ray by calculating its direction and delta
+ * distances (In simpler terms, the "delta distance" refers to the distance
+ * between each step that the ray takes along the x and y axes as it moves
+ * through the map).
+ * The ray direction (ray_dir_x and ray_dir_y) depends on the player's and
+ * camera's positions.
+ * delta_dist_x and delta_dist_y are the distances between each step that
+ * the ray takes on the x and y axis. They represent how far the ray needs to 
+ * move horizontally and vertically to reach the next intersection with a grid
+ * cell in the map.
+ *
+ * @param game game structure.
+ * @param player structure containing player data.
+ * @param ray structure containing ray data.
+ * @param x pixel of the screen the ray is casted to.
+ */
 static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
 {
 	double	camera_x;
