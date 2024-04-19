@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/18 15:35:25 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:55:24 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ static void init_dda(t_game *game, t_player *player, t_ray *ray)
 	}
 }
 
-static void	calc_wall_height(t_game *game, t_ray *ray, t_draw *draw)
+static void	calc_wall_height(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
@@ -149,6 +149,11 @@ static void	calc_wall_height(t_game *game, t_ray *ray, t_draw *draw)
 	draw->draw_end = draw->wall_height / 2 + WIN_H /2;
 	if (draw->draw_end >= WIN_H)
 		draw->draw_end = WIN_H - 1;
+	if (ray->side == 0)
+		draw->wall_x = player->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
+	else
+		draw->wall_x = player->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
+	draw->wall_x -= floor(draw->wall_x);
 }
 
 static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
@@ -163,7 +168,7 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 		init_ray(game, player, ray, x);
 		init_dda(game, player, ray);
 		dda_algo(game, player, ray);
-		calc_wall_height(game, ray, draw);
+		calc_wall_height(game, player, ray, draw);
 		x++;  
 	}
 }

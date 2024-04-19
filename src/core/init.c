@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/18 15:35:45 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:17:08 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static void	init_draw(t_draw *draw)
 	draw->wall_height = 0;
 	draw->draw_start = 0;
 	draw->draw_end = 0;
+	draw->wall_x = 0;
 }
 
 int	init_game(t_game *game)

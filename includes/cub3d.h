@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/18 15:24:17 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/19 10:16:56 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_draw
 	int		wall_height;
 	int		draw_start;
 	int		draw_end;
+	double	wall_x;
 }	t_draw;
 
 typedef struct s_libx
