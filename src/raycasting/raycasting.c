@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 15:48:09 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:44:40 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,8 +286,10 @@ static int	update_tex(t_game *game, t_ray *ray, t_draw *draw, int x)
 	draw->pos = (draw->start - WIN_H / 2 + draw->wall_height / 2) * draw->step;
 	while (y < draw->end)
 	{
+		draw->tex_y = (int)draw->pos & (game->input->tex_size - 1);
 		draw->pos += draw->step;
-		color = draw->textures[draw->tex_dir][game->input->tex_size * (int)draw->pos + draw->tex_x];
+		printf("\n\n\n\n%d\n\n\n", draw->tex_dir);
+		color = draw->textures[draw->tex_dir][game->input->tex_size * draw->tex_y + draw->tex_x];
 		game->pixels[y][x] = color;
 		y++;
 	}

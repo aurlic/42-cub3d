@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 15:44:04 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/22 17:38:33 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ typedef struct s_draw
 	double	wall_x;
 	int		tex_dir;
 	int		tex_x;
+	int		tex_y;
 	double	step;
 	double	pos;
 }	t_draw;
@@ -169,5 +170,6 @@ int		map_to_rectangle(t_game *game, char **map);
 
 /* RAYCASTING */
 /* raycasting.c */
+int	raycasting(t_game *game);
 
 #endif

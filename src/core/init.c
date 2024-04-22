@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 16:46:47 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/22 17:38:18 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static void	init_draw(t_draw *draw)
 	draw->wall_x = 0;
 	draw->tex_dir = 0;
 	draw->tex_x = 0;
+	draw->tex_y = 0;
 	draw->step = 0;
 	draw->pos = 0;
 }
