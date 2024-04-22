@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 15:15:42 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:44:04 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@
 # define SUCCESS 0
 # define FAILURE 1
 # define TMP 69
-# define NO 1001
-# define SO 1002
-# define WE 1003
-# define EA 1004
+# define NO 0
+# define SO 1
+# define WE 2
+# define EA 3
 # define WIN_W 320
 # define WIN_H 200
 # define TEX_SIDE 64
@@ -53,6 +53,7 @@ format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cu
 # define ERR_MISSING_COLOR "Error 🤯\nMissing color.\n"
 # define ERR_INVALID_CHAR "Error 🤯\nInvalid char (see subject for the map configuration details).\n"
 # define ERR_MULT_PLAYER "Error 🤯\nWrong player start configuration (see subject for the map configuration details).\n"
+# define ERR_MLX_IMG "Error 🤯\nCouldn't create image.\n"
 
 typedef struct s_input
 {
@@ -62,6 +63,7 @@ typedef struct s_input
 	char	*wall_so;
 	char	*wall_we;
 	char	*wall_ea;
+	int		tex_size;
 	int		color_f[3];
 	int		color_c[3];
 	int		map_height;
@@ -98,24 +100,33 @@ typedef struct s_player
 
 typedef struct s_draw
 {
+	int		**textures;
 	int		wall_height;
-	int		draw_start;
-	int		draw_end;
+	int		start;
+	int		end;
 	double	wall_x;
 	int		tex_dir;
 	int		tex_x;
+	double	step;
+	double	pos;
 }	t_draw;
 
-typedef struct s_libx
+typedef struct s_img
 {
-	void	*mlx;
-	void	*win;
-}	t_libx;
+	void	*img;
+	int		*addr;
+	int		pixel_bits;
+	int		size_line;
+	int		endian;
+}	t_img;
 
 typedef struct s_game
 {
+	void		*mlx;
+	void		*win;
+	int			**pixels;
 	t_input		*input;
-	t_libx		*libx;
+	t_img		*img;
 	t_player	*player;
 	t_ray		*ray;
 	t_draw		*draw;
@@ -130,6 +141,12 @@ void	free_game(t_game *game);
 int		exit_game(t_game *game);
 /* init.c */
 int		init_game(t_game *game);
+void	init_img(t_img *img);
+int	init_pixels_tab(t_game *game);
+
+/* DISPLAY */
+/* textures.c */
+int		load_textures(t_game *game);
 
 /* PARSER */
 /* parser.c */
@@ -150,7 +167,7 @@ int	check_map(t_game *game);
 /* format_map.c */
 int		map_to_rectangle(t_game *game, char **map);
 
-
 /* RAYCASTING */
-/* raycasting.h */
+/* raycasting.c */
+
 #endif

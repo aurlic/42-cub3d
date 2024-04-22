@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 15:15:41 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:48:09 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,20 +27,20 @@
  */
 static void fill_ns_pos(t_game *game, char dir, int i, int j)
 {
-	game->player->pos_x = j + 0,5;
-	game->player->pos_y = i + 0,5;
+	game->player->pos_x = j + 0.5;
+	game->player->pos_y = i + 0.5;
 	game->player->plane_y = 0;
 	if (dir == 'N')
 	{
 		game->player->dir_x = 0;
 		game->player->dir_x = -1;
-		game->player->plane_x = 0,66;
+		game->player->plane_x = 0.66;
 	}
 	if (dir == 'S')
 	{
 		game->player->dir_x = 0;
 		game->player->dir_x = 1;
-		game->player->plane_x = -0,66;
+		game->player->plane_x = -0.66;
 	}
 }
 
@@ -59,20 +59,20 @@ static void fill_ns_pos(t_game *game, char dir, int i, int j)
  */
 static void fill_we_pos(t_game *game, char dir, int i, int j)
 {
-	game->player->pos_x = j + 0,5;
-	game->player->pos_y = i + 0,5;
+	game->player->pos_x = j + 0.5;
+	game->player->pos_y = i + 0.5;
 	game->player->plane_x = 0;
 	if (dir == 'W')
 	{
 		game->player->dir_x = -1;
 		game->player->dir_x = 0;
-		game->player->plane_y = -0,66;
+		game->player->plane_y = -0.66;
 	}
 	if (dir == 'E')
 	{
 		game->player->dir_x = 1;
 		game->player->dir_x = 0;
-		game->player->plane_y = 0,66;
+		game->player->plane_y = 0.66;
 	}
 }
 
@@ -98,9 +98,9 @@ static void	get_player_start_pos(t_game *game, char **map)
 		while (map[i][j])
 		{
 			if (map[i][j] == 'N' || map[i][j] == 'S')
-				return (fill_player_pos(game, map[i][j], i, j));
+				return (fill_ns_pos(game, map[i][j], i, j));
 			if (map[i][j] == 'W' || map[i][j] == 'E')
-				return (fill_player_pos(game, map[i][j], i, j));
+				return (fill_we_pos(game, map[i][j], i, j));
 			j++;
 		}
 		i++;
@@ -119,7 +119,7 @@ static void	get_player_start_pos(t_game *game, char **map)
  * @param player structure containing player data.
  * @param ray structure containing ray data.
  */
-static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
+static void	dda_algo(t_game *game, t_ray *ray)
 {
 	int	hit;
 
@@ -162,7 +162,7 @@ static void	dda_algo(t_game *game, t_player *player, t_ray *ray)
  * @param ray structure containing ray data.
  * @param x pixel of the screen the ray is casted to.
  */
-static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
+static void	init_ray(t_player *player, t_ray *ray, int x)
 {
 	double	camera_x;
 
@@ -194,7 +194,7 @@ static void	init_ray(t_game *game, t_player *player, t_ray *ray, int x)
  * @param player structure containing player data.
  * @param ray structure containing ray data.
  */
-static void init_dda(t_game *game, t_player *player, t_ray *ray)
+static void init_dda(t_player *player, t_ray *ray)
 {
 	if (ray->ray_dir_x < 0)
 	{
@@ -233,19 +233,19 @@ static void init_dda(t_game *game, t_player *player, t_ray *ray)
  * @param ray structure containing ray data.
  * @param draw structure containing data to draw.
  */
-static void	calc_wall_height(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
+static void	calc_wall_height(t_player *player, t_ray *ray, t_draw *draw)
 {
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
 		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
 	draw->wall_height = (int)(WIN_H / ray->perp_wall_dist);
-	draw->draw_start = (draw->wall_height * -1) / 2 + WIN_H / 2;
-	if (draw->draw_start < 0)
-		draw->draw_start = 0;
-	draw->draw_end = draw->wall_height / 2 + WIN_H /2;
-	if (draw->draw_end >= WIN_H)
-		draw->draw_end = WIN_H - 1;
+	draw->start = (draw->wall_height * -1) / 2 + WIN_H / 2;
+	if (draw->start < 0)
+		draw->start = 0;
+	draw->end = draw->wall_height / 2 + WIN_H /2;
+	if (draw->end >= WIN_H)
+		draw->end = WIN_H - 1;
 	if (ray->side == 0)
 		draw->wall_x = player->pos_y + ray->perp_wall_dist * ray->ray_dir_y;
 	else
@@ -271,11 +271,27 @@ static void	set_texture_index(t_ray *ray, t_draw *draw)
 	}
 }
 
-static void	update_tex(t_ray *ray, t_draw *draw)
+static int	update_tex(t_game *game, t_ray *ray, t_draw *draw, int x)
 {
+	int				y;
+	int	color;
+
+	y = 0;
+	if (init_pixels_tab(game) == FAILURE)
+		return (FAILURE);
 	draw->tex_x = (int)(draw->wall_x * TEX_SIDE);
 	if ((ray->side == 0 && ray->ray_dir_x > 0) || (ray->side == 1 && ray->ray_dir_y < 0))
 		draw->tex_x = TEX_SIDE - draw->tex_x - 1;
+	draw->step = (1.0 * game->input->tex_size / draw->wall_height);
+	draw->pos = (draw->start - WIN_H / 2 + draw->wall_height / 2) * draw->step;
+	while (y < draw->end)
+	{
+		draw->pos += draw->step;
+		color = draw->textures[draw->tex_dir][game->input->tex_size * (int)draw->pos + draw->tex_x];
+		game->pixels[y][x] = color;
+		y++;
+	}
+	return (SUCCESS);
 }
 
 /**
@@ -290,7 +306,7 @@ static void	update_tex(t_ray *ray, t_draw *draw)
  * @param ray structure containing ray data.
  * @param draw structure containing data to draw.
  */
-static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
+static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	int		x;
 	
@@ -299,14 +315,16 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 	x = 0;
 	while (x < WIN_W)
 	{
-		init_ray(game, player, ray, x);
-		init_dda(game, player, ray);
-		dda_algo(game, player, ray);
-		calc_wall_height(game, player, ray, draw);
+		init_ray(player, ray, x);
+		init_dda(player, ray);
+		dda_algo(game, ray);
+		calc_wall_height(player, ray, draw);
 		set_texture_index(ray, draw);
-		update_tex(ray, draw);
+		if (update_tex(game, ray, draw, x) == FAILURE)
+			return (FAILURE);
 		x++;  
 	}
+	return (SUCCESS);
 }
 
 /**
@@ -321,6 +339,7 @@ static void	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 int	raycasting(t_game *game)
 {
 	get_player_start_pos(game, game->input->map);
-	raycaster(game, game->player, game->ray, game->draw);
+	if (raycaster(game, game->player, game->ray, game->draw) == FAILURE)
+		return (FAILURE);
 	return (SUCCESS);
 }

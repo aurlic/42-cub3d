@@ -6,7 +6,7 @@
 /*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/19 13:57:40 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/22 15:43:50 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ static void	init_input(t_input *input)
 	input->wall_so = NULL;
 	input->wall_we = NULL;
 	input->wall_ea = NULL;
+	input->tex_size = 0;
 	input->color_f[0] = -1;
 	input->color_f[1] = -1;
 	input->color_f[2] = -1;
@@ -31,10 +32,13 @@ static void	init_input(t_input *input)
 	input->file_lines = 0;
 }
 
-static void	init_libx(t_libx *libx)
+void	init_img(t_img *img)
 {
-	libx->mlx = NULL;
-	libx->win = NULL;
+	img->img = NULL;
+	img->addr = NULL;
+	img->pixel_bits = 0;
+	img->size_line = 0;
+	img->endian = 0;
 }
 
 static void	init_player(t_player *player)
@@ -65,32 +69,58 @@ static void	init_ray(t_ray *ray)
 
 static void	init_draw(t_draw *draw)
 {
+	draw->textures = NULL;
 	draw->wall_height = 0;
-	draw->draw_start = 0;
-	draw->draw_end = 0;
+	draw->start = 0;
+	draw->end = 0;
 	draw->wall_x = 0;
 	draw->tex_dir = 0;
 	draw->tex_x = 0;
+	draw->step = 0;
+	draw->pos = 0;
+}
+
+int	init_pixels_tab(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	if (game->pixels)
+		free_matrix_safe((char **)game->pixels);
+	game->pixels = ft_calloc(game->input->tex_size + 1, sizeof(int *));
+	if (!game->pixels)
+		return (print_error(ERR_MALLOC), FAILURE);
+	while (i < game->input->tex_size)
+	{
+		game->pixels[i] = ft_calloc(game->input->tex_size + 1, sizeof(int));
+		if (!game->pixels[i])
+			return (print_error(ERR_MALLOC), FAILURE);
+		i++;
+	}
+	return (SUCCESS);
 }
 
 int	init_game(t_game *game)
 {
 	t_input		*input;
-	t_libx		*libx;
+	t_img		*img;
 	t_player	*player;
 	t_ray		*ray;
 	t_draw		*draw;
 
+	game->mlx = NULL;
+	game->win = NULL;
+	game->pixels = NULL;
 	input = ft_calloc(1, sizeof(t_input));
 	if (!input)
 		return (print_error(ERR_MALLOC), FAILURE);
 	init_input(input);
 	game->input = input;
-	libx = ft_calloc(1, sizeof(t_libx));
-	if (!libx)
+	img = ft_calloc(1, sizeof(t_img));
+	if (!img)
 		return (print_error(ERR_MALLOC), FAILURE);
-	init_libx(libx);
-	game->libx = libx;
+	init_img(img);
+	game->img = img;
 	player = ft_calloc(1, sizeof(t_player));
 	if (!player)
 		return (print_error(ERR_MALLOC), FAILURE);
