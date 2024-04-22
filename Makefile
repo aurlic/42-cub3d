@@ -121,7 +121,7 @@ $(LIBFT):
 
 $(NAME): $(LIBFT) $(MLX) $(OBJS)
 	@printf "\r\033[K[cub3d 🧊] \033[4;32mBuilding cub3d: $<\033[0m"
-	@$(CC) $(OBJS) $(LDFLAGS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME)
+	@$(CC) $(OBJS) $(LDFLAGS) $(LIBFT) $(MLX) $(MLX_FLAGS) -o $(NAME) -lm
 	@printf "\r\033[K[cub3d 🧊] \033[0;32mDone!\033[0m\n"
 
 -include $(DEPS)
