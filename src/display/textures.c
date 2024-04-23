@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
+/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/22 10:43:33 by traccurt          #+#    #+#             */
-/*   Updated: 2024/04/22 17:35:26 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 09:54:53 by traccurt         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static int	fill_texture_tab(t_game *game, int *texture, char *path)
 		x = 0;
 		while (x < game->input->tex_size)
 		{
-			texture[y * game->input->tex_size + x]
-				= tmp.addr[y * game->input->tex_size + x];
+			texture[y * game->input->tex_size + x] = tmp.addr[y * game->input->tex_size + x];
 			x++;
 		}
 		y++;
