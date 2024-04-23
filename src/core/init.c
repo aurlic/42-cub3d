@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 17:38:18 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 11:24:01 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	init_input(t_input *input)
 	input->color_c[1] = -1;
 	input->color_c[2] = -1;
 	input->map_height = 0;
+	input->map_width = 0;
 	input->map_start = 0;
 	input->file_lines = 0;
 }
@@ -88,12 +89,12 @@ int	init_pixels_tab(t_game *game)
 	i = 0;
 	if (game->pixels)
 		free_matrix_safe((char **)game->pixels);
-	game->pixels = ft_calloc(game->input->tex_size + 1, sizeof(int *));
+	game->pixels = ft_calloc(WIN_H + 1, sizeof(int *));
 	if (!game->pixels)
 		return (print_error(ERR_MALLOC), FAILURE);
-	while (i < game->input->tex_size)
+	while (i < WIN_H)
 	{
-		game->pixels[i] = ft_calloc(game->input->tex_size + 1, sizeof(int));
+		game->pixels[i] = ft_calloc(WIN_W + 1, sizeof(int));
 		if (!game->pixels[i])
 			return (print_error(ERR_MALLOC), FAILURE);
 		i++;

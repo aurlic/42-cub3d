@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:29:04 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:32:02 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 10:50:03 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,14 +131,13 @@ static char	**fill_voids(char **rect_map, int max_width)
  */
 int	map_to_rectangle(t_game *game, char **map)
 {
-	int		max_width;
 	char	**rect_map;
 
-	max_width = get_max_width(map);
-	rect_map = copy_map(game, map, max_width);
+	game->input->map_width = get_max_width(map);
+	rect_map = copy_map(game, map, game->input->map_width);
 	if (!rect_map)
 		return (print_error(ERR_MALLOC), FAILURE);
-	rect_map = fill_voids(rect_map, max_width);
+	rect_map = fill_voids(rect_map, game->input->map_width);
 	free_matrix_safe(map);
 	game->input->map = rect_map;
 	return (SUCCESS);

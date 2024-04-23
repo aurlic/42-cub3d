@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 18:02:45 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/23 11:17:26 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static void fill_ns_pos(t_game *game, char dir, int i, int j)
 	if (dir == 'N')
 	{
 		game->player->dir_x = 0;
-		game->player->dir_x = -1;
+		game->player->dir_y = -1;
 		game->player->plane_x = 0.66;
 	}
 	if (dir == 'S')
 	{
 		game->player->dir_x = 0;
-		game->player->dir_x = 1;
+		game->player->dir_y = 1;
 		game->player->plane_x = -0.66;
 	}
 }
@@ -65,13 +65,13 @@ static void fill_we_pos(t_game *game, char dir, int i, int j)
 	if (dir == 'W')
 	{
 		game->player->dir_x = -1;
-		game->player->dir_x = 0;
+		game->player->dir_y = 0;
 		game->player->plane_y = -0.66;
 	}
 	if (dir == 'E')
 	{
 		game->player->dir_x = 1;
-		game->player->dir_x = 0;
+		game->player->dir_y = 0;
 		game->player->plane_y = 0.66;
 	}
 }
@@ -126,7 +126,7 @@ static void	dda_algo(t_game *game, t_ray *ray)
 	hit = 0;
 	while (hit == 0)
 	{
-		if (ray->side_dist_x < ray->delta_dist_y)
+		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
 			ray->map_x += ray->step_x;
@@ -138,7 +138,12 @@ static void	dda_algo(t_game *game, t_ray *ray)
 			ray->map_y += ray->step_y;
 			ray->side = 1;
 		}
-		if (game->input->map[ray->map_x][ray->map_y] > 0) // possible inverse
+		if (ray->map_y < 0.25
+			|| ray->map_x < 0.25
+			|| ray->map_y > game->input->map_height - 0.25
+			|| ray->map_x > game->input->map_width - 1.25)
+			break ;
+		if (game->input->map[ray->map_y][ray->map_x] > '0')
 			hit = 1;
 	}
 }
@@ -169,14 +174,10 @@ static void	init_ray(t_player *player, t_ray *ray, int x)
 	camera_x = 2 * x / (double)WIN_W - 1;
 	ray->ray_dir_x = player->dir_x + player->plane_x * camera_x;
 	ray->ray_dir_y = player->dir_y + player->plane_y * camera_x;
-	if (ray->ray_dir_x == 0)
-		ray->delta_dist_x = 1e30;
-	else
-		ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-	if (ray->ray_dir_y == 0)
-		ray->delta_dist_y = 1e30;
-	else
-		ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
+	ray->map_x = (int)player->pos_x;
+	ray->map_y = (int)player->pos_y;
+	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
+	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 }
 
 /**
@@ -204,7 +205,7 @@ static void init_dda(t_player *player, t_ray *ray)
 	else
 	{
 		ray->step_x = 1;
-		ray->side_dist_x = ((ray->map_x + 1 - player->pos_x) * ray->delta_dist_x);
+		ray->side_dist_x = ((ray->map_x + 1.0 - player->pos_x) * ray->delta_dist_x);
 	}
 	if (ray->ray_dir_y < 0)
 	{
@@ -214,7 +215,7 @@ static void init_dda(t_player *player, t_ray *ray)
 	else
 	{
 		ray->step_y = 1;
-		ray->side_dist_y = ((ray->map_y + 1 - player->pos_y) * ray->delta_dist_y);
+		ray->side_dist_y = ((ray->map_y + 1.0 - player->pos_y) * ray->delta_dist_y);
 	}
 }
 
@@ -235,12 +236,13 @@ static void init_dda(t_player *player, t_ray *ray)
  */
 static void	calc_wall_height(t_player *player, t_ray *ray, t_draw *draw)
 {
+	// printf("EL PRINTOS: [ray->side: %d][perpwall: %f][sideDistx: %f][sideDisty: %f][deltaDistx: %f][deltaDisty: %f]\n", ray->side, ray->perp_wall_dist, ray->side_dist_x, ray->side_dist_y, ray->delta_dist_x, ray->delta_dist_y);
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
 		ray->perp_wall_dist = (ray->side_dist_y - ray->delta_dist_y);
 	draw->wall_height = (int)(WIN_H / ray->perp_wall_dist);
-	draw->start = (draw->wall_height * -1) / 2 + WIN_H / 2;
+	draw->start = -(draw->wall_height) / 2 + WIN_H / 2;
 	if (draw->start < 0)
 		draw->start = 0;
 	draw->end = draw->wall_height / 2 + WIN_H /2;
@@ -251,32 +253,38 @@ static void	calc_wall_height(t_player *player, t_ray *ray, t_draw *draw)
 	else
 		draw->wall_x = player->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
 	draw->wall_x -= floor(draw->wall_x);
+	// printf("------[%d]---\n", draw->wall_height);
+	// exit(1);
 }
 
 static void	set_texture_index(t_ray *ray, t_draw *draw)
 {
-	if (ray->side == 1)
-	{
-		if (ray->ray_dir_y < 0)
-			draw->tex_dir = NO;
-		else
-			draw->tex_dir = SO;
-	}
-	else
+	// printf("-[%d]\n", ray->side);
+	if (ray->side == 0)
 	{
 		if (ray->delta_dist_x < 0)
 			draw->tex_dir = WE;
 		else
 			draw->tex_dir = EA;
 	}
+	else
+	{
+		if (ray->ray_dir_y > 0)
+			draw->tex_dir = SO;
+		else
+			draw->tex_dir = NO;
+	}
+	// printf("---[%d]\n", draw->tex_dir);
 }
 
 static int	update_tex(t_game *game, t_ray *ray, t_draw *draw, int x)
 {
-	int				y;
+	int	y;
 	int	color;
 
 	y = 0;
+
+	// printf("[%d]\n", game->draw->tex_dir);
 	if (init_pixels_tab(game) == FAILURE)
 		return (FAILURE);
 	draw->tex_x = (int)(draw->wall_x * TEX_SIDE);
@@ -311,8 +319,6 @@ static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 {
 	int		x;
 	
-	ray->map_x = (int)player->pos_x;
-	ray->map_y = (int)player->pos_y;
 	x = 0;
 	while (x < WIN_W)
 	{

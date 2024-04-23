@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 17:38:33 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 10:57:42 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@
 # define SO 1
 # define WE 2
 # define EA 3
-# define WIN_W 320
-# define WIN_H 200
+# define WIN_W 640
+# define WIN_H 480
 # define TEX_SIDE 64
 # define PLAYER_SPEED 0.1
 # define ROTATION_SPEED 0.05
@@ -67,6 +67,7 @@ typedef struct s_input
 	int		color_f[3];
 	int		color_c[3];
 	int		map_height;
+	int		map_width;
 	int		map_start;
 	int		file_lines;
 }	t_input;
