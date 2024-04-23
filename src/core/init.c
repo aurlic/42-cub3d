@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:34:42 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/23 11:24:01 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:35:29 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ static void	init_input(t_input *input)
 	input->map_width = 0;
 	input->map_start = 0;
 	input->file_lines = 0;
+	input->hex_f = 0x0;
+	input->hex_c = 0x0;
 }
 
 void	init_img(t_img *img)
@@ -50,6 +52,9 @@ static void	init_player(t_player *player)
 	player->dir_y = 0;
 	player->plane_x = 0;
 	player->plane_y = 0;
+	player->move_x = 0;
+	player->move_y = 0;
+	player->rotate = 0;
 }
 
 static void	init_ray(t_ray *ray)

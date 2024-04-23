@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 17:34:31 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:19:26 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ int	main(int ac, char **av)
 		(free_game(&game), exit(EXIT_FAILURE));
 	if (raycasting(&game) == FAILURE)
 		(free_game(&game), exit(EXIT_FAILURE));
-	// mlx_hook(game.window, 2, 1L << 0, keypress_hook, &game);
-	mlx_hook(game.win, MOUSE_CLOSE, 0L, exit_game, &game);
+	handle_events(&game);
+	//mlx_loop_hook
 	mlx_loop(game.mlx);
 	return (free_game(&game), EXIT_SUCCESS);
 }

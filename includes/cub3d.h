@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/23 10:57:42 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 16:45:24 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ typedef struct s_input
 	int		map_width;
 	int		map_start;
 	int		file_lines;
+	unsigned long	hex_f;
+	unsigned long	hex_c;	
 }	t_input;
 
 typedef struct s_ray
@@ -96,7 +98,9 @@ typedef struct s_player
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
-
+	int		move_x;
+	int		move_y;
+	int		rotate;
 }	t_player;
 
 typedef struct s_draw
@@ -162,6 +166,7 @@ int		parse_content(t_game *game);
 int		parse_textures(t_game *game, char **content);
 /* parse_colors.c */
 int		color_identifier(t_game *game, char *content);
+void	colors_to_hex(t_game *game);
 /* remove_newlines.c */
 int		remove_newlines(t_game *game);
 /* check_map.c */
@@ -172,5 +177,9 @@ int		map_to_rectangle(t_game *game, char **map);
 /* RAYCASTING */
 /* raycasting.c */
 int	raycasting(t_game *game);
+
+/* EVENTS */
+/* handle_events.c */
+void	handle_events(t_game *game);
 
 #endif

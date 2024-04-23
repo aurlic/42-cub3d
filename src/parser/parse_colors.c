@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/11 14:03:39 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 14:31:32 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:23:38 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,4 +135,14 @@ int	color_identifier(t_game *game, char *content)
 		i++;
 	}
 	return (SUCCESS);
+}
+
+void	colors_to_hex(t_game *game)
+{
+	game->input->hex_f = (((game->input->color_f[0] & 0xff) << 16)
+		+ ((game->input->color_f[1] & 0xff) << 8)
+		+ (game->input->color_f[2] & 0xff));
+	game->input->hex_c = (((game->input->color_c[0] & 0xff) << 16)
+		+ ((game->input->color_c[1] & 0xff) << 8)
+		+ (game->input->color_c[2] & 0xff));
 }

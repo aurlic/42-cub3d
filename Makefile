@@ -23,6 +23,7 @@ PARSER_DIR	:=	parser
 RAYCAST_DIR	:=	raycasting
 DISPLAY_DIR	:=	display
 CORE_DIR	:=	core
+EVENTS_DIR	:=	events
 INCLD_DIR 	:=	includes
 OBJS_DIR 	:=	objs
 LIBFT_DIR	:=	libft
@@ -95,6 +96,9 @@ define	SRC	:=
 				$(addprefix $(DISPLAY_DIR)/, \
 					textures.c \
 				)
+				$(addprefix $(EVENTS_DIR)/, \
+					handle_events.c \
+				)
 
 endef
 SRC			:=	$(strip $(SRC))
@@ -132,6 +136,7 @@ $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
 	@mkdir -p $(OBJS_DIR)/$(PARSER_DIR)
 	@mkdir -p $(OBJS_DIR)/$(RAYCAST_DIR)
 	@mkdir -p $(OBJS_DIR)/$(DISPLAY_DIR)
+	@mkdir -p $(OBJS_DIR)/$(EVENTS_DIR)
 	@$(CC) $(DEP_FLAGS) $(CFLAGS) $(INCLD_FLAG) -c $< -o $@
 
 clean:

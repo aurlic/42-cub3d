@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/23 11:17:26 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 15:48:46 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,7 +236,6 @@ static void init_dda(t_player *player, t_ray *ray)
  */
 static void	calc_wall_height(t_player *player, t_ray *ray, t_draw *draw)
 {
-	// printf("EL PRINTOS: [ray->side: %d][perpwall: %f][sideDistx: %f][sideDisty: %f][deltaDistx: %f][deltaDisty: %f]\n", ray->side, ray->perp_wall_dist, ray->side_dist_x, ray->side_dist_y, ray->delta_dist_x, ray->delta_dist_y);
 	if (ray->side == 0)
 		ray->perp_wall_dist = (ray->side_dist_x - ray->delta_dist_x);
 	else
@@ -253,13 +252,10 @@ static void	calc_wall_height(t_player *player, t_ray *ray, t_draw *draw)
 	else
 		draw->wall_x = player->pos_x + ray->perp_wall_dist * ray->ray_dir_x;
 	draw->wall_x -= floor(draw->wall_x);
-	// printf("------[%d]---\n", draw->wall_height);
-	// exit(1);
 }
 
 static void	set_texture_index(t_ray *ray, t_draw *draw)
 {
-	// printf("-[%d]\n", ray->side);
 	if (ray->side == 0)
 	{
 		if (ray->delta_dist_x < 0)
@@ -274,7 +270,6 @@ static void	set_texture_index(t_ray *ray, t_draw *draw)
 		else
 			draw->tex_dir = NO;
 	}
-	// printf("---[%d]\n", draw->tex_dir);
 }
 
 static int	update_tex(t_game *game, t_ray *ray, t_draw *draw, int x)
@@ -282,22 +277,19 @@ static int	update_tex(t_game *game, t_ray *ray, t_draw *draw, int x)
 	int	y;
 	int	color;
 
-	y = 0;
-
-	// printf("[%d]\n", game->draw->tex_dir);
-	if (init_pixels_tab(game) == FAILURE)
-		return (FAILURE);
 	draw->tex_x = (int)(draw->wall_x * TEX_SIDE);
 	if ((ray->side == 0 && ray->ray_dir_x > 0) || (ray->side == 1 && ray->ray_dir_y < 0))
 		draw->tex_x = TEX_SIDE - draw->tex_x - 1;
 	draw->step = (1.0 * game->input->tex_size / draw->wall_height);
 	draw->pos = (draw->start - WIN_H / 2 + draw->wall_height / 2) * draw->step;
+	y = draw->start;
 	while (y < draw->end)
 	{
 		draw->tex_y = (int)draw->pos & (game->input->tex_size - 1);
 		draw->pos += draw->step;
 		color = draw->textures[draw->tex_dir][game->input->tex_size * draw->tex_y + draw->tex_x];
-		game->pixels[y][x] = color;
+		if (color > 0)
+			game->pixels[y][x] = color;
 		y++;
 	}
 	return (SUCCESS);
@@ -320,6 +312,8 @@ static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 	int		x;
 	
 	x = 0;
+	if (init_pixels_tab(game) == FAILURE)
+		return (FAILURE);
 	while (x < WIN_W)
 	{
 		init_ray(player, ray, x);
@@ -331,6 +325,54 @@ static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 			return (FAILURE);
 		x++;  
 	}
+	return (SUCCESS);
+}
+
+static int	reset_window_img(t_game *game, t_img *img)
+{
+	init_img(img);
+	img->img = mlx_new_image(game->mlx, WIN_W, WIN_H);
+	if (!img->img)
+		return (print_error(ERR_MLX_IMG), FAILURE);
+	img->addr = (int *)mlx_get_data_addr(img->img, &img->pixel_bits,
+		&img->size_line, &img->endian);
+	return (SUCCESS);
+}
+
+static void	fill_frame(t_game *game, t_img *img, int x, int y)
+{
+	int	pixel;
+
+	pixel = y * (img->size_line / 4) + x;
+	if (game->pixels[y][x] > 0)
+		img->addr[pixel] = game->pixels[y][x];
+	else if (y < WIN_H / 2)
+		img->addr[pixel] = game->input->hex_c;
+	else if (y < WIN_H - 1)
+		img->addr[pixel] = game->input->hex_f;
+}
+
+static int	set_frame(t_game *game)
+{
+	t_img	img;
+	int		x;
+	int		y;
+
+	y = 0;
+	if (reset_window_img(game, &img) == FAILURE)
+		return (FAILURE);
+	while (y < WIN_H)
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			fill_frame(game, &img, x, y);
+			x++;
+		}
+		y++;
+	}
+	mlx_put_image_to_window(game->mlx, game->win, img.img, 0, 0);
+	mlx_destroy_image(game->mlx, img.img);
 	return (SUCCESS);
 }
 
@@ -346,7 +388,11 @@ static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 int	raycasting(t_game *game)
 {
 	get_player_start_pos(game, game->input->map);
+	if (init_pixels_tab(game) == FAILURE)
+		return (FAILURE);
 	if (raycaster(game, game->player, game->ray, game->draw) == FAILURE)
+		return (FAILURE);
+	if (set_frame(game) == FAILURE)
 		return (FAILURE);
 	return (SUCCESS);
 }

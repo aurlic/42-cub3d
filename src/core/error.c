@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: traccurt <traccurt@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:51:48 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/22 11:04:15 by traccurt         ###   ########.fr       */
+/*   Updated: 2024/04/23 15:55:57 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,17 @@ void	free_game(t_game *game)
 		free(game->input->wall_we);
 	if (game->input->wall_ea)
 		free(game->input->wall_ea);
+	if (game->draw->textures)
+		free_matrix_safe((char **)game->draw->textures);
+	if (game->pixels)
+		free_matrix_safe((char **)game->pixels);
 	if (game->win)
 		mlx_destroy_window(game->mlx, game->win);
 	if (game->mlx)
 		(mlx_destroy_display(game->mlx), free(game->mlx));
+	free(game->player);
+	free(game->ray);
+	free(game->draw);
 	free(game->img);
 	free(game->input);
 }

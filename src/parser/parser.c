@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:40:02 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/12 12:08:23 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/23 14:19:32 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	parser(t_game *game, char **av)
 		return (FAILURE);
 	if (check_map(game) == FAILURE)
 		return (FAILURE);
+	colors_to_hex(game);
 	return (SUCCESS);
 }
