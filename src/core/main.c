@@ -6,16 +6,11 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:14:31 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/23 16:55:40 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:09:15 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-int	display(t_game *game)
-{
-	
-}
 
 int	main(int ac, char **av)
 {
@@ -35,7 +30,7 @@ int	main(int ac, char **av)
 		(free_game(&game), exit(EXIT_FAILURE));
 	if (load_textures(&game) == FAILURE)
 		(free_game(&game), exit(EXIT_FAILURE));
-	if (raycasting(&game) == FAILURE)
+	if (raycasting(&game, 1) == FAILURE)
 		(free_game(&game), exit(EXIT_FAILURE));
 	handle_events(&game);
 	mlx_loop_hook(game.mlx, display, &game);

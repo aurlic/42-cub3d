@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/23 15:48:46 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:16:31 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ static void	dda_algo(t_game *game, t_ray *ray)
  * @param ray structure containing ray data.
  * @param x pixel of the screen the ray is casted to.
  */
-static void	init_ray(t_player *player, t_ray *ray, int x)
+static void	start_ray(t_player *player, t_ray *ray, int x)
 {
 	double	camera_x;
 
@@ -316,7 +316,7 @@ static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 		return (FAILURE);
 	while (x < WIN_W)
 	{
-		init_ray(player, ray, x);
+		start_ray(player, ray, x);
 		init_dda(player, ray);
 		dda_algo(game, ray);
 		calc_wall_height(player, ray, draw);
@@ -385,9 +385,10 @@ static int	set_frame(t_game *game)
  * @param game game structure.
  * @return SUCCESS if raycasting worked, FAILURE if not.
  */
-int	raycasting(t_game *game)
+int	raycasting(t_game *game, int flag)
 {
-	get_player_start_pos(game, game->input->map);
+	if (flag == 1)
+		get_player_start_pos(game, game->input->map);
 	if (init_pixels_tab(game) == FAILURE)
 		return (FAILURE);
 	if (raycaster(game, game->player, game->ray, game->draw) == FAILURE)

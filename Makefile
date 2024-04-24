@@ -88,6 +88,7 @@ define	SRC	:=
 				$(addprefix $(CORE_DIR)/, \
 					main.c \
 					init.c \
+					init_structs.c \
 					error.c \
 				)
 				$(addprefix $(RAYCAST_DIR)/, \
@@ -95,9 +96,11 @@ define	SRC	:=
 				)
 				$(addprefix $(DISPLAY_DIR)/, \
 					textures.c \
+					display.c \
 				)
 				$(addprefix $(EVENTS_DIR)/, \
 					handle_events.c \
+					movement.c \
 				)
 
 endef

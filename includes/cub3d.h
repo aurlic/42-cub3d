@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/23 16:45:24 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:15:45 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@
 # define SO 1
 # define WE 2
 # define EA 3
+# define UP 1000
+# define DOWN 1001
+# define LEFT 1002
+# define RIGHT 1003
 # define WIN_W 640
 # define WIN_H 480
 # define TEX_SIDE 64
@@ -101,6 +105,7 @@ typedef struct s_player
 	int		move_x;
 	int		move_y;
 	int		rotate;
+	int		moving;
 }	t_player;
 
 typedef struct s_draw
@@ -147,10 +152,17 @@ void	free_game(t_game *game);
 int		exit_game(t_game *game);
 /* init.c */
 int		init_game(t_game *game);
+int		init_pixels_tab(t_game *game);
+/* init_structs.c */
+void	init_input(t_input *input);
 void	init_img(t_img *img);
-int	init_pixels_tab(t_game *game);
+void	init_player(t_player *player);
+void	init_ray(t_ray *ray);
+void	init_draw(t_draw *draw);
 
 /* DISPLAY */
+/* display.c */
+int		display(t_game *game);
 /* textures.c */
 int		load_textures(t_game *game);
 
@@ -170,16 +182,18 @@ void	colors_to_hex(t_game *game);
 /* remove_newlines.c */
 int		remove_newlines(t_game *game);
 /* check_map.c */
-int	check_map(t_game *game);
+int		check_map(t_game *game);
 /* format_map.c */
 int		map_to_rectangle(t_game *game, char **map);
 
 /* RAYCASTING */
 /* raycasting.c */
-int	raycasting(t_game *game);
+int	raycasting(t_game *game, int flag);
 
 /* EVENTS */
 /* handle_events.c */
 void	handle_events(t_game *game);
+/* movement.c */
+int		movement(t_game *game, t_player *player);
 
 #endif
