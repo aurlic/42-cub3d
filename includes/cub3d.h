@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 17:58:34 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:01:46 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@
 # define WIN_W 640
 # define WIN_H 480
 # define TEX_SIDE 64
-# define PLAYER_SPEED 0.1
-# define ROT_SPEED 0.05
+# define PLAYER_SPEED 0.03
+# define ROT_SPEED 0.04
 # define MOUSE_CLOSE 17
 # define TMP_ERR "YOUHOU CEST LA LE PROBLEME\n"
 # define ERR_WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
