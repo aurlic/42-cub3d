@@ -6,12 +6,11 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 16:15:04 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 15:54:03 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:23:00 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
 
 /**
  * @brief Handle events when a key is pressed.

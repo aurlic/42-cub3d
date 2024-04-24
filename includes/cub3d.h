@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 17:15:45 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:43:04 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,34 +46,39 @@
 # define TMP_ERR "YOUHOU CEST LA LE PROBLEME\n"
 # define ERR_WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
 # define ERR_FILE_NAME "Error 🤯\nFile passed as argument doesn't meet format \
-format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
+format requirements.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d \
+file.cub\n\x1b[0m"
 # define ERR_FILE_OPEN "Error 🤯\nCouldn't open file.\n"
-# define ERR_DIR_ARG "Error 🤯\nDirectory passed as argument.\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
+# define ERR_DIR_ARG "Error 🤯\nDirectory passed as argument.\
+\n\x1b[38;2;255;165;0m\x1b[1mCorrect format: ./cub3d file.cub\n\x1b[0m"
 # define ERR_MALLOC "Error 🤯\nMalloc failed.\n"
-# define ERR_INVALID_MAP "Error 🤯\nInvalid map (see subject for the map configuration details).\n"
+# define ERR_INVALID_MAP "Error 🤯\nInvalid map (see subject for the map \
+configuration details).\n"
 # define ERR_TEXTURES "Error 🤯\nInvalid textures format.\n"
 # define ERR_MISSING_TEXTURES "Error 🤯\nMissing textures.\n"
 # define ERR_INVALID_COLOR "Error 🤯\nInvalid color format.\n"
 # define ERR_MISSING_COLOR "Error 🤯\nMissing color.\n"
-# define ERR_INVALID_CHAR "Error 🤯\nInvalid char (see subject for the map configuration details).\n"
-# define ERR_MULT_PLAYER "Error 🤯\nWrong player start configuration (see subject for the map configuration details).\n"
+# define ERR_INVALID_CHAR "Error 🤯\nInvalid char (see subject for the map \
+configuration details).\n"
+# define ERR_MULT_PLAYER "Error 🤯\nWrong player start configuration \
+(see subject for the map configuration details).\n"
 # define ERR_MLX_IMG "Error 🤯\nCouldn't create image.\n"
 
 typedef struct s_input
 {
-	char	**content;
-	char	**map;
-	char	*wall_no;
-	char	*wall_so;
-	char	*wall_we;
-	char	*wall_ea;
-	int		tex_size;
-	int		color_f[3];
-	int		color_c[3];
-	int		map_height;
-	int		map_width;
-	int		map_start;
-	int		file_lines;
+	char			**content;
+	char			**map;
+	char			*wall_no;
+	char			*wall_so;
+	char			*wall_we;
+	char			*wall_ea;
+	int				tex_size;
+	int				color_f[3];
+	int				color_c[3];
+	int				map_height;
+	int				map_width;
+	int				map_start;
+	int				file_lines;
 	unsigned long	hex_f;
 	unsigned long	hex_c;	
 }	t_input;
@@ -188,7 +193,18 @@ int		map_to_rectangle(t_game *game, char **map);
 
 /* RAYCASTING */
 /* raycasting.c */
-int	raycasting(t_game *game, int flag);
+int		raycasting(t_game *game, int flag);
+/* handle_frame.c */
+int		set_frame(t_game *game);
+/* position.c */
+void	get_player_start_pos(t_game *game, char **map);
+/* dda.c */
+void	dda_algo(t_game *game, t_ray *ray);
+void	init_dda(t_player *player, t_ray *ray);
+void	calc_wall_height(t_player *player, t_ray *ray, t_draw *draw);
+/* texture_view.c */
+void	set_texture_index(t_ray *ray, t_draw *draw);
+int		update_tex(t_game *game, t_ray *ray, t_draw *draw, int x);
 
 /* EVENTS */
 /* handle_events.c */

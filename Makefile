@@ -93,6 +93,10 @@ define	SRC	:=
 				)
 				$(addprefix $(RAYCAST_DIR)/, \
 					raycasting.c \
+					handle_frame.c \
+					position.c \
+					dda.c \
+					texture_view.c \
 				)
 				$(addprefix $(DISPLAY_DIR)/, \
 					textures.c \
