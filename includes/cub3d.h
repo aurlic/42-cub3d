@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/09 16:15:24 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 17:43:04 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:58:34 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define WIN_H 480
 # define TEX_SIDE 64
 # define PLAYER_SPEED 0.1
-# define ROTATION_SPEED 0.05
+# define ROT_SPEED 0.05
 # define MOUSE_CLOSE 17
 # define TMP_ERR "YOUHOU CEST LA LE PROBLEME\n"
 # define ERR_WRONG_ARG_NB "Error 🤯\nWrong number of arguments.\n"
@@ -211,5 +211,8 @@ int		update_tex(t_game *game, t_ray *ray, t_draw *draw, int x);
 void	handle_events(t_game *game);
 /* movement.c */
 int		movement(t_game *game, t_player *player);
+/* rotate.c */
+int		rotate_left(t_player *player);
+int		rotate_right(t_player *player);
 
 #endif

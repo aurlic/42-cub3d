@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:08:39 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 17:44:40 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 17:57:11 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,9 @@ int	movement(t_game *game, t_player *player)
 		mvmt += horizontal_move(game, player, LEFT);
 	if (player->move_x == 1)
 		mvmt += horizontal_move(game, player, RIGHT);
-	// if (player->rotate )
+	if (player->rotate < 0)
+		mvmt += rotate_left(player);
+	if (player->rotate > 0)
+		mvmt += rotate_right(player);
 	return (mvmt);
 }

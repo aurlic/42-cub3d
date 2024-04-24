@@ -105,6 +105,7 @@ define	SRC	:=
 				$(addprefix $(EVENTS_DIR)/, \
 					handle_events.c \
 					movement.c \
+					rotate.c \
 				)
 
 endef
