@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 17:39:30 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 17:42:11 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:25:50 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	set_texture_index(t_ray *ray, t_draw *draw)
 {
 	if (ray->side == 0)
 	{
-		if (ray->delta_dist_x < 0)
+		if (ray->ray_dir_x < 0)
 			draw->tex_dir = WE;
 		else
 			draw->tex_dir = EA;

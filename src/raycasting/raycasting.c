@@ -6,7 +6,7 @@
 /*   By: aurlic <aurlic@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:31:52 by aurlic            #+#    #+#             */
-/*   Updated: 2024/04/24 17:41:49 by aurlic           ###   ########.fr       */
+/*   Updated: 2024/04/24 18:19:13 by aurlic           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ static int	raycaster(t_game *game, t_player *player, t_ray *ray, t_draw *draw)
 	int	x;
 
 	x = 0;
-	if (init_pixels_tab(game) == FAILURE)
-		return (FAILURE);
 	while (x < WIN_W)
 	{
 		start_ray(player, ray, x);
